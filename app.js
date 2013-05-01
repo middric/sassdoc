@@ -1,21 +1,20 @@
+var express = require('express'),
+	routes = require('./routes'),
+	http = require('http'),
+	path = require('path'),
+	sass = require('node-sass'),
+	execSync = require('execSync'),
+	bootstrap = require('./bootstrap'),
+	app = express();
 
-/**
- * Module dependencies.
- */
-
-var express = require('express')
-  , routes = require('./routes')
-  , http = require('http')
-  , path = require('path')
-  , sass = require('node-sass');
-
-var app = express();
+bootstrap.validateArgs(process.argv);
 
 app.configure(function () {
 	// all environments
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
+	app.set('configuration', bootstrap.setConfig(process.argv[2]));
 	app.use(sass.middleware({
 		src: __dirname + '/public/sass',
 		dest: __dirname + '/public',
@@ -40,3 +39,6 @@ app.get('/', routes.index);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+var output = execSync.stdout("echo 'body{background:red}' | sass -s --scss --compass");
+console.log(output);
