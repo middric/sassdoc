@@ -1,20 +1,21 @@
 var fs = require('fs'),
-	error = function (str) {
-		var red = '\033[31m',
-			reset = '\033[0m';
-		console.error(red + str + reset);
-		process.exit();
+	e = require('../config/exceptions.js');
+
+module.exports = function (args, app) {
+	if (args.length < 3) {
+		throw new e.NotEnoughArgs();
 	}
 
-module.exports = function (app) {
-	if (process.argv.length < 3) {
-		error('Not enough arguments');
+	if (!fs.existsSync(args[2])) {
+		throw new e.FileDoesNotExist();
 	}
 
-	if (!fs.existsSync(process.argv[2])) {
-		error('Configuration file: \n\t"' + process.argv[2] + '"\ndoes not exist');
+	var data = fs.readFileSync(args[2]),
+		json;
+	try {
+		json = JSON.parse(data.toString());
+	} catch (err) {
+		throw new e.InvalidJSONFile();
 	}
-
-	var data = fs.readFileSync(process.argv[2]);
-	app.set('configuration', JSON.parse(data.toString()));
+	app.set('configuration', json);
 };
