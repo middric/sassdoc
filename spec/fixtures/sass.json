@@ -1,0 +1,4 @@
+{
+	"in": "$color: red; body { background: $color; }",
+	"out": "body{background:red}\n"
+}

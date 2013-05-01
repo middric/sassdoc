@@ -1,5 +1,5 @@
-var Bootstrap = require('../config/bootstrap.js'),
-	e = require('../config/exceptions.js');
+var Bootstrap = require('../../config/bootstrap.js'),
+	e = require('../../config/exceptions.js');
 
 describe('Bootstrap', function () {
 	it("should throw an error with too few arguments", function () {
@@ -25,7 +25,7 @@ describe('Bootstrap', function () {
 	it("should set an app variable containing the config json", function () {
 		var filename = 'spec/fixtures/validconfig.json',
 			app = require('express')(),
-			json = require('./fixtures/validconfig.json');
+			json = require('../fixtures/validconfig.json');
 
 		Bootstrap([1, 2, filename], app);
 		expect(app.get('configuration')).toEqual(json);
