@@ -1,4 +1,5 @@
 var execSync = require('execSync'),
+	e = require('../config/exceptions.js'),
 	Sass = function () {
 	var sassCommand = 'sass',
 		sassStyle = 'scss',
@@ -12,8 +13,11 @@ var execSync = require('execSync'),
 			if (useCompass) {
 				cmd += ' --compass';
 			}
-			output = execSync.stdout("echo '" + sass + "' | " + cmd);
-			return output;
+			output = execSync.exec("echo '" + sass + "' | " + cmd);
+			if (output.code) {
+				throw new e.UnableToParseSass;
+			}
+			return output.stdout;
 		},
 
 		// Getters and setters

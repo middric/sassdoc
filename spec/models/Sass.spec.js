@@ -1,4 +1,5 @@
 var Sass = require('../../models/Sass.js'),
+	fixture = require('../fixtures/sass.json'),
 	e = require('../../config/exceptions.js');
 
 describe('Sass', function () {
@@ -30,9 +31,13 @@ describe('Sass', function () {
 	});
 
 	it("should parse sass", function () {
-		var sass = require('../fixtures/sass.json');
-
 		Sass.setSassCommand('sass');
-		expect(Sass.parse(sass.in)).toBe(sass.out);
+		expect(Sass.parse(fixture.in)).toBe(fixture.out);
 	});
+
+	it("should throw an exception with invalid sass", function () {
+		expect(function () {
+			Sass.parse(fixture.invalid);
+		}).toThrow(new e.UnableToParseSass);
+	})
 });

@@ -1,4 +1,5 @@
 {
 	"in": "$color: red; body { background: $color; }",
-	"out": "body{background:red}\n"
+	"out": "body{background:red}\n",
+	"invalid": "this is not sass"
 }

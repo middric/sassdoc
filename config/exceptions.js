@@ -21,5 +21,6 @@ AbstractException.prototype.name = 'Abstract Exception';
 ExceptionFactory('NotEnoughArgs', 'Not enough arguments');
 ExceptionFactory('FileDoesNotExist', 'File does not exist');
 ExceptionFactory('InvalidJSONFile', 'File is not valid JSON');
+ExceptionFactory('UnableToParseSass', 'Unable to parse Sass file');
 
 module.exports = exceptions;
