@@ -9,14 +9,20 @@ describe('SassParser', function () {
 
 		expect(SassParser.getSassCommand()).toEqual(sassCommand);
 	});
+	it("should set the Sass syntax", function () {
+		var sassSyntax = 'scss',
+			invalidSyntax = 'invalid';
+
+		SassParser.setSassSyntax(sassSyntax);
+		expect(SassParser.getSassSyntax()).toEqual(sassSyntax);
+
+		SassParser.setSassStyle(invalidSyntax);
+		expect(SassParser.getSassSyntax()).toEqual(sassSyntax);
+	});
 	it("should set the Sass style", function () {
-		var sassStyle = 'scss',
-			invalidStyle = 'invalid';
+		var sassStyle = 'compressed';
 
 		SassParser.setSassStyle(sassStyle);
-		expect(SassParser.getSassStyle()).toEqual(sassStyle);
-
-		SassParser.setSassStyle(invalidStyle);
 		expect(SassParser.getSassStyle()).toEqual(sassStyle);
 	});
 	it("should set the Compass option", function () {

@@ -26,8 +26,7 @@ describe('Bootstrap', function () {
 		var filename = 'spec/fixtures/validconfig.json',
 			app = require('express')(),
 			json = require('../fixtures/validconfig.json');
-
-		Bootstrap([1, 2, filename], app);
-		expect(app.get('configuration')).toEqual(json);
+		
+		expect(Bootstrap([1, 2, filename], app)).toEqual(json);
 	})
 });

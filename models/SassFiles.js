@@ -1,5 +1,6 @@
 var e = require('../config/exceptions.js'),
 	fs = require('fs'),
+	buf = require('buffer'),
 	SassFiles = function () {
 
 	return {
@@ -41,7 +42,12 @@ var e = require('../config/exceptions.js'),
 				throw new e.UnableToReadFile();
 			}
 
+			output = this.readBuffer(output);
 			return output;
+		},
+
+		readBuffer: function (buffer) {
+			return buffer.toString();
 		}
 	};
 };

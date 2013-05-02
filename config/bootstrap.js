@@ -17,5 +17,5 @@ module.exports = function (args, app) {
 	} catch (err) {
 		throw new e.InvalidJSONFile();
 	}
-	app.set('configuration', json);
+	return json;
 };

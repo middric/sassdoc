@@ -1,0 +1,12 @@
+/**
+ * @component Body styling
+ * <body>
+ *     The body
+ * </body>
+ */
+@mixin test {
+	$color: red;
+	body {
+		background: $color;
+	}
+}

@@ -2,12 +2,13 @@ var execSync = require('execSync'),
 	e = require('../config/exceptions.js'),
 	SassParser = function () {
 	var sassCommand = 'sass',
-		sassStyle = 'scss',
+		sassSyntax = 'scss',
+		sassStyle = 'expanded',
 		useCompass = true;
 
 	return {
 		parse: function (sass) {
-			var cmd = sassCommand + ' -s -t compressed --' + sassStyle,
+			var cmd = sassCommand + ' -s -t ' + sassStyle + ' --' + sassSyntax,
 				output;
 
 			if (useCompass) {
@@ -21,12 +22,20 @@ var execSync = require('execSync'),
 		},
 
 		// Getters and setters
+		setSassStyle: function (style) {
+			if (style === 'compressed' || style === 'nested' || style === 'compact' || style === 'expanded') {
+				sassStyle = style;
+			}
+		},
+		getSassStyle: function () {
+			return sassStyle;
+		},
 		setSassCommand: function (cmd) {
 			sassCommand = cmd;
 		},
-		setSassStyle: function (style) {
+		setSassSyntax: function (style) {
 			if (style === 'sass' || style === 'scss') {
-				sassStyle = style;
+				sassSyntax = style;
 			}
 		},
 		setCompass: function (bool) {
@@ -35,8 +44,8 @@ var execSync = require('execSync'),
 		getSassCommand: function () {
 			return sassCommand;
 		},
-		getSassStyle: function () {
-			return sassStyle;
+		getSassSyntax: function () {
+			return sassSyntax;
 		},
 		getCompass: function () {
 			return useCompass;
