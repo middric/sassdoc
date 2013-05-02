@@ -1,9 +1,16 @@
 var e = require('../config/exceptions.js'),
 	fs = require('fs'),
 	SassComponent = function () {
+	var getComponentName = function (line) {
+		var matches;
+		if (matches = line.match(/@component\s*(.+)$/)) {
+			return matches[1];
+		}
+		return '';
+	}
 
 	return {
-		getTemplates: function(data) {
+		getComponents: function(data) {
 			var lines = data.split("\n"),
 				components = [],
 				openBraceCount = 0,
@@ -12,27 +19,30 @@ var e = require('../config/exceptions.js'),
 				matches;
 
 			for (var i = 0; i < lines.length; i++) {
-				if (lines[i].match(/^\/\/ @component/)) {
-					components.push([]);
+				if (lines[i].match(/^(\/\/|\s*\*)\s*@component/)) {
+					components.push({name: getComponentName(lines[i]), sass: []});
 					record = true;
 					continue;
 				}
+				if (!record) {
+					continue;
+				}
 
-				if (record) {
-					components[components.length - 1].push(lines[i]);
+				// Brace counters
+				if (matches = lines[i].match(/\{/g)) {
+					openBraceCount += matches.length;
+				}
+				if (matches = lines[i].match(/\}/g)) {
+					closeBraceCount += matches.length;
+				}		
 
-					if (matches = lines[i].match(/\{/g)) {
-						openBraceCount += matches.length;
-					}
-
-					if (matches = lines[i].match(/\}/g)) {
-						closeBraceCount += matches.length;
-					}					
+				// Only record lines if openbrace count is greater than 0
+				if (openBraceCount > 0) {
+					components[components.length - 1].sass.push(lines[i]);			
 
 					if (closeBraceCount === openBraceCount) {
-						components[components.length - 1] = components[components.length - 1].join("\n");
+						components[components.length - 1].sass = components[components.length - 1].sass.join("\n");
 						record = false;
-						continue;
 					}
 				}
 			}
