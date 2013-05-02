@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head></head>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://yandex.st/highlightjs/7.2/highlight.min.js"></script>
+		<link href="http://yandex.st/highlightjs/7.2/styles/github.min.css" rel="stylesheet"  type="text/css" />
+		<link href="http://static.bbci.co.uk/frameworks/barlesque/2.44.2/orb/4/style/orb-ie.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="stylesheets/index.css" />
+	</head>
 	<body>
-		<h1><%= name %></h1>
+		<div id="tviplayer">
+			<div id="styleguide-content">
+				<div id="styleguide-item-header">
+					<h1><%= name %></h1>
+				</div>
 
-		<h2>Sass</h2>
-		<pre><%= sass %></pre>
+				<h2>Sass</h2>
+				<pre><code class="css"><%= sass %></code></pre>
 
-		<h2>CSS</h2>
-		<pre><%= css %></pre>
+				<h2>CSS</h2>
+				<pre><code class="css"><%= css %></code></pre>
 
-		<h2>Markup</h2>
-		<pre><%= markup %></pre>
+				<h2>Markup</h2>
+				<pre><code class="html"><%= markup %></code></pre>
 
-		<h2>Example</h2>
-		<style><%- css %></style>
-		<%- markup %>
+				<div class="styleguide-markup">
+					<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%- css %></style><div id='markup'><%- markup %></div>"></iframe>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$('iframe').load(function () {
+				$(this).height($('#markup',$(this).contents()).height());
+			})
+			$('pre').each(function (i, e) {
+				hljs.highlightBlock(e);
+			})
+		</script>
 	</body>
 </html>

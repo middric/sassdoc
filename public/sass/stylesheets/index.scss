@@ -14,11 +14,127 @@
 	}
 }
 
-body {
-	padding: 50px;
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 
-a {
-	color: #00B7FF;
+body {
+    background-color: #fff;
+    font-size: 13px;
+}
+#styleguide-content {
+	margin: 20px;
+	h1 {
+		color: #333;
+		border-bottom: 1px solid #999;
+		padding: 0 0 10px
+	}
+}
+#styleguide-header {
+	background: #000;
+	padding: 10px 0;
+	h1 {
+		background: transparent url(/tviplayernav/dev/img/iplayer.png) no-repeat 20px -119px;
+		color: #eee;
+		padding: 10px 20px 10px 125px
+	}
+}
+.styleguide-container {
+	overflow: hidden;
+	padding: 20px;
+	border-bottom: 1px solid #ccc;
+	h2 {
+		color: #333;
+		margin-bottom: 0;
+		font-size: 1.5em;
+		cursor: pointer;
+	}
+	h3 {
+		color: #333;
+		margin-bottom: 10px;
+		font-size: 1em;
+	}
+	h4 {
+		color: #333;
+		font-size: 1em;
+		padding: 0 20px 0 40px;
+	}
+}
+#styleguide-themes, #styleguide-components {
+	margin-bottom: 40px;
+}
+.styleguide-sass, .styleguide-markup {
+	border: 1px solid #ddd;
+}
+.styleguide-markup {
+	position: relative;
+	padding: 40px 20px 20px;
+	overflow: hidden;
+	&:after {
+		content: "Example";
+		position: absolute;
+		top: -1px;
+		left: -1px;
+		padding: 3px 7px;
+		font-size: 12px;
+		font-weight: bold;
+		background-color: #f5f5f5;
+		color: #9da0a4;
+		border: 1px solid #ddd;
+		-webkit-border-radius: 0 0 4px 0;
+		-moz-border-radius: 0 0 4px 0;
+		border-radius: 0 0 4px 0;
+	}
+}
+.styleguide-sass {
+	background: #f8f8ff;
+	overflow-x: auto;
+	font-size: 1.3em;
+	border-top: 0;
+	code {
+		background: transparent;
+		padding: 10px 20px;
+	}
+	code.instances {
+		padding-left: 40px;
+		padding-top: 0
+	}
+}
+.styleguide-markup pre {
+	font-size: 1.3em;
+}
+.styleguide-subtemplate {
+	overflow: hidden;
+	position: relative;
+	border: 1px dotted #ddd;
+	margin: 10px 0;
+	padding: 10px;
+}
+.styleguide-color span {
+	opacity: 0.5;
+	font-size: 1.3em;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	font-family: monospace;
+}
+.styleguide-nav {
+	background: #eee;
+	padding: 10px 20px;
+	list-style: none;
+	overflow: hidden;
+	& > li {
+		line-height: 20px;
+		float: left;
+		a {
+			color: #333;
+			display: block;
+			padding: 8px 12px;
+			margin: 2px 2px 2px 0;
+			line-height: 14px;
+			border-radius: 5px;
+		}
+	}
+	& > .active > a {
+		color: #fff;
+		background: #333;
+	}
 }
