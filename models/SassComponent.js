@@ -20,7 +20,7 @@ var e = require('../config/exceptions.js'),
 
 			for (var i = 0; i < lines.length; i++) {
 				if (lines[i].match(/^(\/\/|\s*\*)\s*@component/)) {
-					components.push({name: getComponentName(lines[i]), sass: []});
+					components.push({name: getComponentName(lines[i]), sass: [], markup: []});
 					record = true;
 					continue;
 				}
@@ -34,7 +34,13 @@ var e = require('../config/exceptions.js'),
 				}
 				if (matches = lines[i].match(/\}/g)) {
 					closeBraceCount += matches.length;
-				}		
+				}
+
+				// Markup detection
+				if (matches = lines[i].match(/^\s\*\s(.*)/)) {
+					components[components.length - 1].markup.push(matches[1]);
+					continue;
+				}
 
 				// Only record lines if openbrace count is greater than 0
 				if (openBraceCount > 0) {
@@ -42,6 +48,7 @@ var e = require('../config/exceptions.js'),
 
 					if (closeBraceCount === openBraceCount) {
 						components[components.length - 1].sass = components[components.length - 1].sass.join("\n");
+						components[components.length - 1].markup = components[components.length - 1].markup.join("\n");
 						record = false;
 					}
 				}
