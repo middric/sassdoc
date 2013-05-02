@@ -8,7 +8,7 @@ describe('SassComponent', function () {
 	});
 
 	it("should return a populated array if components exit", function () {
-		var fixture = "$color: red;\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n// @end",
+		var fixture = "$color: red;\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = "@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			result = SassComponent.getTemplates(fixture);
 
@@ -17,7 +17,7 @@ describe('SassComponent', function () {
 	});
 
 	it("should be able to return multiple components", function () {
-		var fixture = "$color: red;\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n// @end\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n// @end",
+		var fixture = "$color: red;\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = ["@mixin test {\nbody {\nbackground: $color;\n}\n}","@mixin test {\nbody {\nbackground: $color;\n}\n}"],
 			result = SassComponent.getTemplates(fixture);
 

@@ -6,7 +6,10 @@ var e = require('../config/exceptions.js'),
 		getTemplates: function(data) {
 			var lines = data.split("\n"),
 				components = [],
-				record = 0;
+				openBraceCount = 0,
+				closeBraceCount = 0,
+				record = 0,
+				matches;
 
 			for (var i = 0; i < lines.length; i++) {
 				if (lines[i].match(/^\/\/ @component/)) {
@@ -15,14 +18,22 @@ var e = require('../config/exceptions.js'),
 					continue;
 				}
 
-				if (lines[i].match(/^\/\/ @end/)) {
-					components[components.length - 1] = components[components.length - 1].join("\n");
-					record = false;
-					continue;
-				}
-
 				if (record) {
 					components[components.length - 1].push(lines[i]);
+
+					if (matches = lines[i].match(/\{/g)) {
+						openBraceCount += matches.length;
+					}
+
+					if (matches = lines[i].match(/\}/g)) {
+						closeBraceCount += matches.length;
+					}					
+
+					if (closeBraceCount === openBraceCount) {
+						components[components.length - 1] = components[components.length - 1].join("\n");
+						record = false;
+						continue;
+					}
 				}
 			}
 
