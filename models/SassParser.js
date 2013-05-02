@@ -1,6 +1,6 @@
 var execSync = require('execSync'),
 	e = require('../config/exceptions.js'),
-	Sass = function () {
+	SassParser = function () {
 	var sassCommand = 'sass',
 		sassStyle = 'scss',
 		useCompass = true;
@@ -44,4 +44,4 @@ var execSync = require('execSync'),
 	};
 };
 
-module.exports = new Sass();
+module.exports = new SassParser();
