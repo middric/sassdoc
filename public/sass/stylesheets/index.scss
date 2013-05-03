@@ -1,6 +1,8 @@
 /**
- * @component Background mixin
- * @usage div { @include test }
+ * @component
+ * @name 		Background mixin
+ * @description A Mixin to change the background colour
+ * @usage 		div { @include test }
  * <div>
  *     <span>The body</span>
  * </div>
@@ -15,7 +17,7 @@
 }
 
 /**
- * @component
+ * @component Body
  */
 body {
     background-color: #fff;

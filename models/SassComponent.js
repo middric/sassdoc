@@ -1,12 +1,16 @@
 var e = require('../config/exceptions.js'),
 	fs = require('fs'),
 	SassComponent = function () {
-	var getComponentName = function (line) {
+	var getName = function (line) {
 			var matches;
-			if (matches = line.match(/@component\s*(.+)$/)) {
+			if (matches = line.match(/@name\s*(.+)$/)) {
 				return matches[1];
 			}
 			return '';
+		},
+		getDescription = function (line) {
+			var matches = line.match(/^\s\*\s@description\s+(.*)/);
+			return (matches) ? matches[1] : null;
 		},
 		startRecording = function (line) {
 			return line.match(/^(\/\/|\s*\*)\s*@component/);
@@ -15,13 +19,13 @@ var e = require('../config/exceptions.js'),
 			return [line.match(/\{/g), line.match(/\}/g)];
 		},
 		getMarkup = function (line) {
-			var matches = line.match(/^\s\*\s(.*)/);
+			var matches = line.match(/^\s\*\s([^@]*)/);
 			return (matches) ? matches[1] : null;
 		},
 		getUsage = function (line) {
 			var matches = line.match(/^\s\*\s@usage\s+(.*)/);
 			return (matches) ? matches[1] : null;
-		}
+		};
 
 	return {
 		getComponents: function(data) {
@@ -34,13 +38,23 @@ var e = require('../config/exceptions.js'),
 
 			for (var i = 0; i < lines.length; i++) {
 				if (startRecording(lines[i])) {
-					components.push({name: getComponentName(lines[i]), sass: [], markup: [], usage: []});
+					components.push({name: '', description: '', sass: [], markup: [], usage: []});
 					record = true;
 					openBraceCount = 0;
 					closeBraceCount = 0;
 					continue;
 				}
 				if (record) {
+					// Name detection
+					if (name = getName(lines[i])) {
+						components[components.length - 1].name = name;
+					}
+
+					// Description detection
+					if (description = getDescription(lines[i])) {
+						components[components.length - 1].description = description;
+					}
+
 					// Usage detection
 					if (usage = getUsage(lines[i])) {
 						components[components.length - 1].usage.push(usage);
