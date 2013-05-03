@@ -1,4 +1,4 @@
-module.exports = function (app) {	
+module.exports = function (app) {
 	app.get('/', function (req, res) {
 		res.render('index', { title: 'Express' });
 	});
@@ -13,9 +13,11 @@ module.exports = function (app) {
 			components = [];
 		for (var i = 0; i < files.length; i++) {
 			components = SassComponent.getComponents(files[i]);
-			components[0].css = SassParser.parse(components[0].sass + components[0].usage);
+			for (var j = 0; j < components.length; j++) {
+				components[j].css = SassParser.parse(components[j].sass + components[j].usage);
+			}
 		}
 
-		res.render('iframe', {name: components[0].name, sass: components[0].sass, markup: components[0].markup, css: components[0].css});
+		res.render('iframe', {components: components});
 	});
 }

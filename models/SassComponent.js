@@ -36,6 +36,8 @@ var e = require('../config/exceptions.js'),
 				if (startRecording(lines[i])) {
 					components.push({name: getComponentName(lines[i]), sass: [], markup: [], usage: []});
 					record = true;
+					openBraceCount = 0;
+					closeBraceCount = 0;
 					continue;
 				}
 				if (record) {

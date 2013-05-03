@@ -9,24 +9,26 @@
 	</head>
 	<body>
 		<div id="tviplayer">
+			<% for(var i=0; i < components.length; i++) { %>
 			<div id="styleguide-content">
 				<div id="styleguide-item-header">
-					<h1><%= name %></h1>
+					<h1><%= components[i].name %></h1>
 				</div>
 
 				<h2>Sass</h2>
-				<pre><code class="css"><%= sass %></code></pre>
+				<pre><code class="css"><%= components[i].sass %></code></pre>
 
 				<h2>CSS</h2>
-				<pre><code class="css"><%= css %></code></pre>
+				<pre><code class="css"><%= components[i].css %></code></pre>
 
 				<h2>Markup</h2>
-				<pre><code class="html"><%= markup %></code></pre>
+				<pre><code class="html"><%= components[i].markup %></code></pre>
 
 				<div class="styleguide-markup">
-					<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%- css %></style><div id='markup'><%- markup %></div>"></iframe>
+					<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%- components[i].css %></style><div id='markup'><%- components[i].markup %></div>"></iframe>
 				</div>
 			</div>
+			<% } %>
 		</div>
 		<script type="text/javascript">
 			$('iframe').load(function () {

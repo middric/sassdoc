@@ -1,5 +1,5 @@
 /**
- * @component Body styling
+ * @component Background mixin
  * @usage div { @include test }
  * <div>
  *     <span>The body</span>
@@ -14,7 +14,9 @@
 	}
 }
 
-
+/**
+ * @component
+ */
 body {
     background-color: #fff;
     font-size: 13px;

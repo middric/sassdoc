@@ -16,7 +16,7 @@ describe('SassComponent', function () {
 	});
 
 	it("should be able to return multiple components", function () {
-		var fixture = "$color: red;\n/*\n * @component\n*/\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
+		var fixture = "$color: red;\n/*\n * @component\n*/\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n/*\n * @component\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = [
 				{name: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""},
 				{name: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""}
