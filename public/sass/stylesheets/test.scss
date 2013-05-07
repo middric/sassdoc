@@ -1,0 +1,17 @@
+/**
+ * @component
+ * @name 		Another mixin
+ * @description A Mixin to change the background colour
+ * @usage 		div { @include test }
+ * <div>
+ *     <span>The body</span>
+ * </div>
+ */
+@mixin test {
+	$color: red;
+	background: $color;
+	span {
+		display: block;
+		padding: 10px;
+	}
+}
