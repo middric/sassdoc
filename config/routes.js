@@ -5,20 +5,29 @@ module.exports = function (app) {
 	app.get('/component', function (req, res) {
 		var config = app.get('configuration'),
 			SassFiles = require('../models/SassFiles.js'),
-			SassComponent = require('../models/SassComponent.js'),
+			SassDoc = require('../models/SassDoc.js'),
 			SassParser = require('../models/SassParser.js');
 
 		SassFiles.findFiles(config.sassDirectory);
 		var files = SassFiles.readFiles(),
-			components = [];
+			components = [],
+			toParse;
 		for (var i = 0; i < files.length; i++) {
-			components = components.concat(SassComponent.getComponents(files[i]));
-			for (var j = 0; j < components.length; j++) {
-				components[j].css = SassParser.parse(components[j].sass + components[j].usage);
+			components = components.concat(SassDoc.split(files[i]));
+		}
+		components = SassDoc.sort(components);
+
+		for (var package in components) {
+			for (var j = 0; j < components[package].length; j++) {
+				toParse = components[package][j].codeBlock;
+				if (components[package][j].docBlock['@usage']) {
+					toParse += components[package][j].docBlock['@usage'];
+				}
+				components[package][j].css = SassParser.parse(toParse);
 			}
 		}
 
-		res.render('components', {components: components});
+		res.render('components', {packages: components});
 	});
 	app.get('/variables', function (req, res) {
 		var config = app.get('configuration'),

@@ -12,13 +12,14 @@ var e = require('../config/exceptions.js'),
 		getVariables: function(data) {
 			var lines = data.split("\n"),
 				variables = [],
+				package = '',
 				record = false,
-				name, value, sass;
+				obj, name, value, sass;
 
 			for (var i = 0; i < lines.length; i++) {
 
 				if (startRecording(lines[i])) {
-					variables.push([{name: '', value: '', sass: ''}]);
+					obj = {};
 					record = true;
 					continue;
 				}
@@ -26,12 +27,15 @@ var e = require('../config/exceptions.js'),
 					name = lines[i].match(/\$[^:]+/);
 					value = lines[i].match(/([^:\s;]+);?$/);
 					if (name && value) {
-						variables[variables.length - 1] = {
+						obj = {
 							name: name[0],
 							value: value[1],
-							sass: lines[i],
-							isColor: isColor(value[1])
+							sass: lines[i]
+						};
+						if (isColor(value[1])) {
+							obj.isColor = true;
 						}
+						variables.push(obj);
 						record = false;
 					}
 				}

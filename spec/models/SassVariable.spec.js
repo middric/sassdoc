@@ -25,4 +25,26 @@ describe('SassVariable', function () {
 
 		expect(result).toEqual(expected);
 	});
+
+	it("should detect colors", function () {
+		var fixture = "/**\n * @variable\n **/\n$color1: #ff0000;\n/**\n * @variable\n **/\n$color2: #00f;",
+			expected = [
+				{name: '$color1', value: '#ff0000', sass: '$color1: #ff0000;', isColor: true},
+				{name: '$color2', value: '#00f', sass: '$color2: #00f;', isColor: true}
+			],
+			result = SassVariable.getVariables(fixture);
+
+		expect(result).toEqual(expected);
+	})
+
+	it("should understand packages", function () {
+		var fixture = "/**\n * @variable\n * @package Name\n **/\n$color1: red;\n/**\n * @variable\n **/\n$color2: blue;",
+			expected = [
+				{package: 'Name', values: {name: '$color1', value: 'red', sass: '$color1: red;'}},
+				{name: '$color2', value: 'blue', sass: '$color2: blue;'}
+			],
+			result = SassVariable.getVariables(fixture);
+
+		expect(result).toEqual(expected);
+	});
 });

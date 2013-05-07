@@ -18,9 +18,9 @@
 				<h2>Sass</h2>
 				<pre><code class="css"><%= variables[i].sass %></code></pre>
 				<% if (variables[i].isColor) { %>
-					<div class="styleguide-markup">
-						<iframe width="100%" seamless srcdoc="<style>body {background: <%- variables[i].value %>}</style><%- variables[i].value %>"></iframe>
-					</div>
+				<div class="styleguide-markup">
+					<iframe width="100%" seamless srcdoc="<style>body {background: <%- variables[i].value %>}</style><%- variables[i].value %>"></iframe>
+				</div>
 				<% } %>
 			</div>
 			<% } %>
