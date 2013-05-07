@@ -18,6 +18,20 @@ module.exports = function (app) {
 			}
 		}
 
-		res.render('iframe', {components: components});
+		res.render('components', {components: components});
+	});
+	app.get('/variables', function (req, res) {
+		var config = app.get('configuration'),
+			SassFiles = require('../models/SassFiles.js'),
+			SassVariable = require('../models/SassVariable.js');
+
+		SassFiles.findFiles(config.sassDirectory);
+		var files = SassFiles.readFiles(),
+			variables = [];
+		for (var i = 0; i < files.length; i++) {
+			variables = variables.concat(SassVariable.getVariables(files[i]));
+		}
+
+		res.render('variables', {variables: variables});
 	});
 }

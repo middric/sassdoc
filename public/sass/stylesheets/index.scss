@@ -1,4 +1,14 @@
 /**
+ * @variable
+ */
+$colour1: #ff0000;
+
+/**
+ * @variable
+ */
+$gel-padding: 8px;
+
+/**
  * @component
  * @name 		Background mixin
  * @description A Mixin to change the background colour
@@ -8,8 +18,7 @@
  * </div>
  */
 @mixin test {
-	$color: red;
-	background: $color;
+	background: $colour1;
 	span {
 		display: block;
 		padding: 10px;
