@@ -11,6 +11,7 @@ body {
 $pale-squid: #ddd !default;
 .styleguide-markup {
 	border: 1px solid $pale-squid;
+	border-bottom: 0;
 	position: relative;
 	padding: 40px 20px 20px;
 	overflow: hidden;
@@ -35,4 +36,9 @@ $pale-squid: #ddd !default;
 	border: 1px dotted #ddd;
 	padding: 10px 20px 20px;
 	margin-bottom: 20px;
+}
+
+pre {
+	background: #f8f8ff;
+	border-radius: 0;
 }

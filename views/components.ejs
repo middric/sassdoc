@@ -23,11 +23,11 @@
 						<pre><code class="css"><%= packages[package][i].codeBlock %></code></pre> 
 
 						<h3>Markup</h3>
-						<pre><code class="html"><%= packages[package][i].docBlock['@markup'] %></code></pre>
 
 						<div class="styleguide-markup">
 							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= packages[package][i].css %></style><div id='markup'><%= packages[package][i].docBlock['@markup'] %></div>"></iframe>
 						</div>
+						<pre><code class="html"><%= packages[package][i].docBlock['@markup'] %></code></pre>
 					</div>
 					<% } %>
 				</div>
