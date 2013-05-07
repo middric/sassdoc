@@ -9,7 +9,7 @@ describe('SassComponent', function () {
 
 	it("should return a populated array if components exit", function () {
 		var fixture = "$color: red;\n// @component\n@mixin test {\nbody {\nbackground: $color;\n}}",
-			expected = [{name: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}}", markup: "", usage: ""}],
+			expected = [{name: '', description: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}}", markup: "", usage: ""}],
 			result = SassComponent.getComponents(fixture);
 
 		expect(result).toEqual(expected);
@@ -18,8 +18,8 @@ describe('SassComponent', function () {
 	it("should be able to return multiple components", function () {
 		var fixture = "$color: red;\n/*\n * @component\n*/\n@mixin test {\nbody {\nbackground: $color;\n}\n}\n/*\n * @component\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = [
-				{name: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""},
-				{name: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""}
+				{name: '', description: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""},
+				{name: '', description: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""}
 			],
 			result = SassComponent.getComponents(fixture);
 
@@ -27,17 +27,18 @@ describe('SassComponent', function () {
 	});
 
 	it("should be support named components", function () {
-		var fixture = "$color: red;\n// @component My component\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
-			expected = [{name: 'My component', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""}],
+		var fixture = "$color: red;\n// @component\n@name My component\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
+			expected = [{name: 'My component', description: '', sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}", markup: "", usage: ""}],
 			result = SassComponent.getComponents(fixture);
 
 		expect(result).toEqual(expected);
 	});
 
 	it("should support markup examples", function () {
-		var fixture = "$color: red;\n/*\n * @component My component\n * <div>\n * Markup\n * </div>\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
+		var fixture = "$color: red;\n/*\n * @component\n @name My component\n * <div>\n * Markup\n * </div>\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = [{
 				name: 'My component',
+				description: '',
 				sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}",
 				markup: "<div>\nMarkup\n</div>",
 				usage: ""
@@ -48,9 +49,10 @@ describe('SassComponent', function () {
 	});
 
 	it("should support sass usage directives", function () {
-		var fixture = "$color: red;\n/*\n * @component My component\n * @usage div { @include test }\n * <div>\n * Markup\n * </div>\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
+		var fixture = "$color: red;\n/*\n * @component\n @name My component\n * @usage div { @include test }\n * <div>\n * Markup\n * </div>\n */\n@mixin test {\nbody {\nbackground: $color;\n}\n}",
 			expected = [{
 				name: 'My component',
+				description: '',
 				sass: "@mixin test {\nbody {\nbackground: $color;\n}\n}",
 				markup: "<div>\nMarkup\n</div>",
 				usage: "div { @include test }"
