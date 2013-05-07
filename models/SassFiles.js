@@ -1,6 +1,7 @@
 var e = require('../config/exceptions.js'),
 	fs = require('fs'),
 	buf = require('buffer'),
+	wrench = require('wrench'),
 	SassFiles = function () {
 
 	return {
@@ -10,7 +11,7 @@ var e = require('../config/exceptions.js'),
 		findFiles: function(dir) {
 			this.dir = dir + '/';
 			try {
-				this.files = fs.readdirSync(dir);
+				this.files = wrench.readdirSyncRecursive(dir);
 			} catch(err) {
 				throw new e.DirectoryDoesNotExist();
 			}
@@ -20,7 +21,6 @@ var e = require('../config/exceptions.js'),
 					delete this.files[i];
 				}
 			}
-
 			this.files = this.files.filter(function () { return true; });
 		},
 

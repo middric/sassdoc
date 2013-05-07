@@ -21,6 +21,10 @@ var SassDoc = function () {
 		"@markup": function (str) {
 			var matches = str.match(/^\s\*\s([^@]*)/);
 			return (matches) ? matches[1].trim() : false;
+		},
+		"@import": function (str) {
+			var matches = str.match(/@import\s+(.+)$/);
+			return (matches) ? matches[1].trim() : false;
 		}
 	},
 	matchesTag = function (input) {
@@ -81,13 +85,17 @@ var SassDoc = function () {
 					}
 
 					codeBlock = codeBlock.join("\n");
-					parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
+					if (codeBlock) {
+						parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
+					}
 					recording = false;
 				}
 			}
 
 			if (recording) {
-				codeBlock = codeBlock.join("\n");
+				if (codeBlock) {
+					codeBlock = codeBlock.join("\n");
+				}
 				parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
 			}
 

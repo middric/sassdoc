@@ -20,6 +20,9 @@ module.exports = function (app) {
 		for (var package in components) {
 			for (var j = 0; j < components[package].length; j++) {
 				toParse = components[package][j].codeBlock;
+				if (components[package][j].docBlock['@import']) {
+					toParse = "@import \"" + components[package][j].docBlock['@import'] + "\";\n" + toParse;
+				}
 				if (components[package][j].docBlock['@usage']) {
 					toParse += components[package][j].docBlock['@usage'];
 				}
