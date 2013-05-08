@@ -129,14 +129,18 @@ var SassDoc = function () {
 			for( var i = 0; i < parts.length; i++) {
 				if (parts[i].docBlock['@package']) {
 					if (!packages[parts[i].docBlock['@package']]) {
-						packages[parts[i].docBlock['@package']] = [];
+						packages[parts[i].docBlock['@package']] = {'Components': [], 'Variables': []};
 					}
-					packages[parts[i].docBlock['@package']].push(parts[i]);
+					if (parts[i].docBlock['@variable']) {
+						packages[parts[i].docBlock['@package']].Variables.push(parts[i]);
+					} else {
+						packages[parts[i].docBlock['@package']].Components.push(parts[i]);
+					}
 				} else {
 					if (!packages.Global) {
-						packages.Global = [];
+						packages.Global = {'Components': [], 'Variables': []};
 					}
-					packages.Global.push(parts[i]);
+					packages.Global.Components.push(parts[i]);
 				}
 			}
 

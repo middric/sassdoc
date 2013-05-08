@@ -4,7 +4,6 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://yandex.st/highlightjs/7.2/highlight.min.js"></script>
 		<link href="http://yandex.st/highlightjs/7.2/styles/github.min.css" rel="stylesheet"  type="text/css" />
-		<link href="http://static.bbci.co.uk/frameworks/barlesque/2.44.2/orb/4/style/orb-ie.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
 	</head>
@@ -21,34 +20,44 @@
 				</div>
 			</div>
 
-			<% for(var component in components) { %>
+			<% for(var package in blocks) { %>
+			<% for(var block in blocks[package]) { %>
+			<% if (blocks[package][block].length) { %>
+			<h1><%= block %></h1>
   			<div class="row-fluid">
   				<div class="span12">
-					<% for(var i = 0; i < components[component].length; i++) { %>
+					<% for(var i = 0; i < blocks[package][block].length; i++) { %>
 					<div class="border">
-						<h2><%= components[component][i].docBlock['@name'] || '' %></h2>
-						<div class="description"><%- components[component][i].docBlock['@description'] || '' %></div>
+						<h2><%= blocks[package][block][i].docBlock['@name'] || '' %></h2>
+						<div class="description"><%- blocks[package][block][i].docBlock['@description'] || '' %></div>
 
-						<% if (components[component][i].docBlock['@import']) { %>
+						<% if (blocks[package][block][i].docBlock['@import']) { %>
 						<h3>Imports</h3>
-						<pre><code class="html"><%= components[component][i].docBlock['@import'] %></code></pre>
+						<pre><code class="html"><%= blocks[package][block][i].docBlock['@import'] %></code></pre>
+						<% } %>
+
+						<% if (blocks[package][block][i].docBlock['@extends']) { %>
+						<h3>Extends</h3>
+						<pre><code class="html"><%= blocks[package][block][i].docBlock['@extends'] %></code></pre>
 						<% } %>
 
 						<h3>Sass</h3>
-						<pre><code class="css"><%= components[component][i].codeBlock %></code></pre> 
+						<pre><code class="css"><%= blocks[package][block][i].codeBlock %></code></pre> 
 
-						<% if (components[component][i].docBlock['@markup']) { %>
+						<% if (blocks[package][block][i].docBlock['@markup']) { %>
 						<h3>Example</h3>
 						<div class="styleguide-markup">
-							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= components[component][i].css %></style><div id='markup'><%= components[component][i].docBlock['@markup'] %></div>"></iframe>
+							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= blocks[package][block][i].css %></style><div id='markup'><%= blocks[package][block][i].docBlock['@markup'] %></div>"></iframe>
 						</div>
-						<pre><code class="html"><%= components[component][i].docBlock['@markup'] %></code></pre>
+						<pre><code class="html"><%= blocks[package][block][i].docBlock['@markup'] %></code></pre>
 						<% } %>
 					</div>
 					<% } %>
 				</div>
 				<hr />
 			</div>
+			<% } %>
+			<% } %>
 			<% } %>
 		</div>
 		<script type="text/javascript">

@@ -7,33 +7,31 @@ module.exports = function (app) {
 
 		SassFiles.findFiles(sassDirectory);
 		var files = SassFiles.readFiles(),
-			components = [],
+			blocks = [],
 			toParse;
 		for (var file in files) {
-			components = components.concat(SassDoc.split(files[file], requestedPackage));
+			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage));
 		}
-		components = SassDoc.sort(components);
-
-		for (var package in components) {
-			for (var j = 0; j < components[package].length; j++) {
-				toParse = "@import \"" + components[package][j].filename + "\"; " + components[package][j].codeBlock;
-				if (components[package][j].docBlock['@import']) {
-					toParse = "@import \"" + __dirname + '/../' + components[package][j].docBlock['@import'] + "\";\n" + toParse;
+		blocks = SassDoc.sort(blocks);
+		for (var package in blocks) {
+			for (var block in blocks[package]) {
+				for (var j = 0; j < blocks[package][block].length; j++) {
+					toParse = "@import \"" + blocks[package][block][j].filename + "\"; " + blocks[package][block][j].codeBlock;
+					if (blocks[package][block][j].docBlock['@import']) {
+						toParse = "@import \"" + __dirname + '/../' + blocks[package][block][j].docBlock['@import'] + "\";\n" + toParse;
+					}
+					if (blocks[package][block][j].docBlock['@usage']) {
+						toParse += blocks[package][block][j].docBlock['@usage'];
+					}
+					blocks[package][block][j].css = SassParser.parse(toParse);
 				}
-				if (components[package][j].docBlock['@usage']) {
-					toParse += components[package][j].docBlock['@usage'];
-				}
-				components[package][j].css = SassParser.parse(toParse);
 			}
 		}
 
 		var packages = SassDoc.getPackages();
-		return {currentPackage: requestedPackage, packages: packages, components: components};
+		return {currentPackage: requestedPackage, packages: packages, blocks: blocks};
 	};
 
-	/*app.get('/', function (req, res) {
-		res.render('index', { title: 'Express' });
-	});*/
 	app.get('/', function (req, res) {
 		res.render('components', packageRoute('Global'));
 	});
