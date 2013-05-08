@@ -66,4 +66,7 @@ $pale-squid: #ccc !default;
 pre {
 	background: #f8f8ff;
 	border-radius: 0;
+	&, code {
+	 	font-family: 'Source Code Pro', monospace;
+	}
 }
