@@ -26,8 +26,13 @@
   				<div class="span12">
 					<% for(var i = 0; i < components[component].length; i++) { %>
 					<div class="border">
-						<h2><%= components[component][i].docBlock['@name'] %></h2>
+						<h2><%= components[component][i].docBlock['@name'] || '' %></h2>
 						<div class="description"><%- components[component][i].docBlock['@description'] || '' %></div>
+
+						<% if (components[component][i].docBlock['@import']) { %>
+						<h3>Imports</h3>
+						<pre><code class="html"><%= components[component][i].docBlock['@import'] %></code></pre>
+						<% } %>
 
 						<h3>Sass</h3>
 						<pre><code class="css"><%= components[component][i].codeBlock %></code></pre> 

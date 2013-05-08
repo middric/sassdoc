@@ -1,24 +1,24 @@
 module.exports = function (app) {
 	var packageRoute = function (requestedPackage) {
-		var config = app.get('configuration'),
+		var sassDirectory = app.get('configuration'),
 			SassFiles = require('../models/SassFiles.js'),
 			SassDoc = require('../models/SassDoc.js'),
 			SassParser = require('../models/SassParser.js');
 
-		SassFiles.findFiles(config.sassDirectory);
+		SassFiles.findFiles(sassDirectory);
 		var files = SassFiles.readFiles(),
 			components = [],
 			toParse;
-		for (var i = 0; i < files.length; i++) {
-			components = components.concat(SassDoc.split(files[i], requestedPackage));
+		for (var file in files) {
+			components = components.concat(SassDoc.split(files[file], requestedPackage));
 		}
 		components = SassDoc.sort(components);
 
 		for (var package in components) {
 			for (var j = 0; j < components[package].length; j++) {
-				toParse = components[package][j].codeBlock;
+				toParse = "@import \"" + components[package][j].filename + "\"; " + components[package][j].codeBlock;
 				if (components[package][j].docBlock['@import']) {
-					toParse = "@import \"" + components[package][j].docBlock['@import'] + "\";\n" + toParse;
+					toParse = "@import \"" + __dirname + '/../' + components[package][j].docBlock['@import'] + "\";\n" + toParse;
 				}
 				if (components[package][j].docBlock['@usage']) {
 					toParse += components[package][j].docBlock['@usage'];

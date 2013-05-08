@@ -16,6 +16,7 @@ var execSync = require('execSync'),
 			}
 			output = execSync.exec("echo '" + sass + "' | " + cmd);
 			if (output.code) {
+				console.log(sass);
 				throw new e.UnableToParseSass;
 			}
 			return output.stdout;

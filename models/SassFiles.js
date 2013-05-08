@@ -43,7 +43,7 @@ var e = require('../config/exceptions.js'),
 			}
 
 			output = this.readBuffer(output);
-			return output;
+			return {filename: this.dir + file, output: output};
 		},
 
 		readBuffer: function (buffer) {

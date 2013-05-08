@@ -20,13 +20,17 @@ var SassDoc = function () {
 			var matches = str.match(/@usage\s+(.+)$/);
 			return (matches) ? matches[1].trim() : false;
 		},
-		"@markup": function (str) {
-			var matches = str.match(/^\s\*\s([^@]*)/);
-			return (matches) ? matches[1].replace(/(^\s|\s+$)/, '') + "\n" : false;
-		},
 		"@import": function (str) {
 			var matches = str.match(/@import\s+(.+)$/);
 			return (matches) ? matches[1].trim() : false;
+		},
+		"@extends": function (str) {
+			var matches = str.match(/@extends\s+(.+)$/);
+			return (matches) ? matches[1].trim() : false;
+		},
+		"@markup": function (str) {
+			var matches = str.match(/^\s\*\s([^@]*)/);
+			return (matches) ? matches[1].replace(/(^\s|\s+$)/, '') + "\n" : false;
 		}
 	},
 	packages = ['Global'],
@@ -62,8 +66,8 @@ var SassDoc = function () {
 		},
 
 		// Splits Sass source code into documented parts
-		split: function (input, package) {
-			var lines = input.split("\n"),
+		split: function (file, package) {
+			var lines = file.output.split("\n"),
 				parts = [],
 				recording = false,
 				docBlock, codeBlock, tag;
@@ -103,7 +107,7 @@ var SassDoc = function () {
 					}
 					codeBlock = codeBlock.join("\n");
 					if ((codeBlock && !package) || (codeBlock && docBlock['@package'] == package)) {
-						parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
+						parts.push({"docBlock": docBlock, "codeBlock": codeBlock, "filename": file.filename});
 					}
 					recording = false;
 				}
@@ -113,7 +117,9 @@ var SassDoc = function () {
 				if (codeBlock) {
 					codeBlock = codeBlock.join("\n");
 				}
-				parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
+				if ((codeBlock && !package) || (codeBlock && docBlock['@package'] == package)) {
+					parts.push({"docBlock": docBlock, "codeBlock": codeBlock, "filename": file.filename});
+				}
 			}
 
 			return parts;
@@ -127,6 +133,9 @@ var SassDoc = function () {
 					}
 					packages[parts[i].docBlock['@package']].push(parts[i]);
 				} else {
+					if (!packages.Global) {
+						packages.Global = [];
+					}
 					packages.Global.push(parts[i]);
 				}
 			}

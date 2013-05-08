@@ -1,0 +1,12 @@
+/**
+ * @package Variables
+ * @variable
+ */
+$pale-squid: #ccc;
+
+/**
+ * @package Variables
+ * @extends $pale-squid
+ * @variable
+ */
+$border-color: $pale-squid;

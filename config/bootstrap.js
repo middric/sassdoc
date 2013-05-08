@@ -6,7 +6,9 @@ module.exports = function (args, app) {
 		throw new e.NotEnoughArgs();
 	}
 
-	if (!fs.existsSync(args[2])) {
+	return args[2];
+
+	/*if (!fs.existsSync(args[2])) {
 		throw new e.FileDoesNotExist();
 	}
 
@@ -17,5 +19,5 @@ module.exports = function (args, app) {
 	} catch (err) {
 		throw new e.InvalidJSONFile();
 	}
-	return json;
+	return json;*/
 };

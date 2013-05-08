@@ -1,3 +1,5 @@
+@import '_variables';
+
 body {
 	padding: 20px;
     font-size: 13px;
@@ -7,6 +9,8 @@ body {
  * @package Typography
  * @name Headings
  * @description Heading styles
+ * @import /public/sass/stylesheets/_variables.scss
+ *
  * <h1>Heading 1</h1>
  * <h2>Heading 2</h2>
  * <h3>Heading 3</h3>
@@ -21,7 +25,7 @@ h2, h3 {
 h3 {
 	font-weight: 400;
 	background: #dfdfff;
-	border: 1px solid #ccc;
+	border: 1px solid $pale-squid;
 	border-bottom: 0;
 	padding: 10px;
 	margin-bottom: 0;
@@ -35,11 +39,12 @@ h3 {
 /**
  * @name Example box styling
  * @description <p>This is a description of the thing.</p><p>You can put <strong>HTML</strong> in here.</p>
+ * @import /public/sass/stylesheets/_variables.scss
+ *
  * <div class="styleguide-markup">
  *     This is an example
  * </div>
  */
-$pale-squid: #ccc !default;
 .styleguide-markup {
 	border: 1px solid $pale-squid;
 	border-bottom: 0;
@@ -50,10 +55,12 @@ $pale-squid: #ccc !default;
 
 /**
  * @name Component borders
+ * @import /public/sass/stylesheets/_variables.scss
+ *
  * <div class="border">Lorem ipsum dolor sit amet.</div>
  */
 .border {
-	border: 1px dotted #ccc;
+	border: 1px dotted $pale-squid;
 	padding: 10px 20px 20px;
 	margin-bottom: 20px;
 }
