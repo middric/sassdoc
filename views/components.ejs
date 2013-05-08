@@ -5,29 +5,40 @@
 		<script src="http://yandex.st/highlightjs/7.2/highlight.min.js"></script>
 		<link href="http://yandex.st/highlightjs/7.2/styles/github.min.css" rel="stylesheet"  type="text/css" />
 		<link href="http://static.bbci.co.uk/frameworks/barlesque/2.44.2/orb/4/style/orb-ie.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="stylesheets/index.css" />
+		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
 	</head>
 	<body>
 		<div class="container-fluid">
-			<% for(var package in packages) { %>
+			<div class="navbar">
+				<div class="navbar-inner">
+					<a class="brand" href="#">SassDoc</a>
+					<ul class="nav">
+						<% for(var package in packages) { %>
+						<li class="<%= (currentPackage == packages[package]) ? 'active' : '' %>"><a href="/packages/<%= packages[package] %>"><%= packages[package] %></a></li>
+						<% } %>
+					</ul>
+				</div>
+			</div>
+
+			<% for(var component in components) { %>
   			<div class="row-fluid">
   				<div class="span12">
-					<h1><%= package %></h1>
-					<% for(var i = 0; i < packages[package].length; i++) { %>
+					<% for(var i = 0; i < components[component].length; i++) { %>
 					<div class="border">
-						<h2><%= packages[package][i].docBlock['@name'] %></h2>
-						<p><%= packages[package][i].docBlock['@description'] || '' %></p>
+						<h2><%= components[component][i].docBlock['@name'] %></h2>
+						<div class="description"><%- components[component][i].docBlock['@description'] || '' %></div>
 
 						<h3>Sass</h3>
-						<pre><code class="css"><%= packages[package][i].codeBlock %></code></pre> 
+						<pre><code class="css"><%= components[component][i].codeBlock %></code></pre> 
 
-						<h3>Markup</h3>
-
+						<% if (components[component][i].docBlock['@markup']) { %>
+						<h3>Example</h3>
 						<div class="styleguide-markup">
-							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= packages[package][i].css %></style><div id='markup'><%= packages[package][i].docBlock['@markup'] %></div>"></iframe>
+							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= components[component][i].css %></style><div id='markup'><%= components[component][i].docBlock['@markup'] %></div>"></iframe>
 						</div>
-						<pre><code class="html"><%= packages[package][i].docBlock['@markup'] %></code></pre>
+						<pre><code class="html"><%= components[component][i].docBlock['@markup'] %></code></pre>
+						<% } %>
 					</div>
 					<% } %>
 				</div>
@@ -37,7 +48,7 @@
 		</div>
 		<script type="text/javascript">
 			$('iframe').load(function () {
-				$(this).height($('#markup',$(this).contents()).height());
+				$(this).height($('#markup',$(this).contents()).outerHeight());
 			})
 			$('pre').each(function (i, e) {
 				hljs.highlightBlock(e);

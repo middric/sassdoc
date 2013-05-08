@@ -1,8 +1,5 @@
 module.exports = function (app) {
-	app.get('/', function (req, res) {
-		res.render('index', { title: 'Express' });
-	});
-	app.get('/component', function (req, res) {
+	var packageRoute = function (requestedPackage) {
 		var config = app.get('configuration'),
 			SassFiles = require('../models/SassFiles.js'),
 			SassDoc = require('../models/SassDoc.js'),
@@ -13,7 +10,7 @@ module.exports = function (app) {
 			components = [],
 			toParse;
 		for (var i = 0; i < files.length; i++) {
-			components = components.concat(SassDoc.split(files[i]));
+			components = components.concat(SassDoc.split(files[i], requestedPackage));
 		}
 		components = SassDoc.sort(components);
 
@@ -30,8 +27,21 @@ module.exports = function (app) {
 			}
 		}
 
-		res.render('components', {packages: components});
+		var packages = SassDoc.getPackages();
+		return {currentPackage: requestedPackage, packages: packages, components: components};
+	};
+
+	/*app.get('/', function (req, res) {
+		res.render('index', { title: 'Express' });
+	});*/
+	app.get('/', function (req, res) {
+		res.render('components', packageRoute('Global'));
 	});
+
+	app.get('/packages/:package', function (req, res) {
+		res.render('components', packageRoute(req.params.package));
+	});
+
 	app.get('/variables', function (req, res) {
 		var config = app.get('configuration'),
 			SassFiles = require('../models/SassFiles.js'),

@@ -3,8 +3,10 @@ var SassDoc = function () {
 		"@variable": /@variable/,
 		"@component": /@component/,
 		"@package": function (str) {
-			var matches = str.match(/@package\s+(.+)$/);
-			return (matches) ? matches[1].trim() : false;
+			var matches = str.match(/@package\s+(.+)$/),
+				package = (matches) ? matches[1].trim() : null;
+			packages.push(package);
+			return package;
 		},
 		"@name": function(str) {
 			var matches = str.match(/@name\s+(.+)$/);
@@ -20,13 +22,14 @@ var SassDoc = function () {
 		},
 		"@markup": function (str) {
 			var matches = str.match(/^\s\*\s([^@]*)/);
-			return (matches) ? matches[1].trim() : false;
+			return (matches) ? matches[1].replace(/(^\s|\s+$)/, '') + "\n" : false;
 		},
 		"@import": function (str) {
 			var matches = str.match(/@import\s+(.+)$/);
 			return (matches) ? matches[1].trim() : false;
 		}
 	},
+	packages = ['Global'],
 	matchesTag = function (input) {
 		var result;
 		for (var tag in tags) {
@@ -46,8 +49,20 @@ var SassDoc = function () {
 	};
 
 	return {
+		getPackages: function () {
+			var a = [];
+			for (var i = 0; i < packages.length; i++) {
+				if (a.indexOf(packages[i]) == -1 && packages[i] !== null && packages[i] !== 'Global') {
+					a.push(packages[i]);
+				}
+			}
+			a = a.sort();
+			a.unshift('Global');
+			return a;
+		},
+
 		// Splits Sass source code into documented parts
-		split: function (input) {
+		split: function (input, package) {
 			var lines = input.split("\n"),
 				parts = [],
 				recording = false,
@@ -64,7 +79,6 @@ var SassDoc = function () {
 				}
 
 				if (recording) {
-					// Mid block
 					if (lines[i].match(/^\s?\*/)) {
 						if (tag = matchesTag(lines[i])) {
 							if (!docBlock[tag[0]]) {
@@ -84,8 +98,11 @@ var SassDoc = function () {
 						continue;
 					}
 
+					if (!docBlock['@package']) {
+						docBlock['@package'] = packages[0];
+					}
 					codeBlock = codeBlock.join("\n");
-					if (codeBlock) {
+					if ((codeBlock && !package) || (codeBlock && docBlock['@package'] == package)) {
 						parts.push({"docBlock": docBlock, "codeBlock": codeBlock});
 					}
 					recording = false;
@@ -102,7 +119,7 @@ var SassDoc = function () {
 			return parts;
 		},
 		sort: function (parts) {
-			var packages = {"Global": []};
+			var packages = {};
 			for( var i = 0; i < parts.length; i++) {
 				if (parts[i].docBlock['@package']) {
 					if (!packages[parts[i].docBlock['@package']]) {
