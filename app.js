@@ -9,8 +9,7 @@ app.use(sass.middleware({
 	src: __dirname + '/public/sass',
 	dest: __dirname + '/public',
 	debug: true,
-	outputStyle: 'compressed',
-	include_paths: [__dirname + '/public/sass/stylesheets/']
+	outputStyle: 'compressed'
 }));
 app.use(express.favicon());
 app.use(express.logger('dev'));
