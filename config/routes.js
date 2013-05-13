@@ -46,25 +46,10 @@ module.exports = function (app) {
 	};
 
 	app.get('/', function (req, res) {
-		res.render('components', packageRoute('Global'));
+		res.render('view', packageRoute('Global'));
 	});
 
 	app.get('/packages/:package', function (req, res) {
-		res.render('components', packageRoute(req.params.package));
-	});
-
-	app.get('/variables', function (req, res) {
-		var config = app.get('configuration'),
-			SassFiles = require('../models/SassFiles.js'),
-			SassVariable = require('../models/SassVariable.js');
-
-		SassFiles.findFiles(config.sassDirectory);
-		var files = SassFiles.readFiles(),
-			variables = [];
-		for (var i = 0; i < files.length; i++) {
-			variables = variables.concat(SassVariable.getVariables(files[i]));
-		}
-
-		res.render('variables', {variables: variables});
+		res.render('view', packageRoute(req.params.package));
 	});
 }
