@@ -1,3 +1,10 @@
 {
-	"sassDirectory": "public/sass/stylesheets"
+	"sassDirectory": "sass",
+	"useCompass": true/*,
+	"imports": [
+		"themes/default"
+	],
+	"externalCSS": [
+		"http://static.bbci.co.uk/frameworks/barlesque/2.45.9/orb/4/style/orb.css"
+	]*/
 }

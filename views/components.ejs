@@ -47,7 +47,7 @@
 						<% if (blocks[package][block][i].docBlock['@markup']) { %>
 						<h3>Example</h3>
 						<div class="styleguide-markup">
-							<iframe width="100%" seamless srcdoc="<style>*{margin:0;padding:0}<%= blocks[package][block][i].css %></style><div id='markup'><%= blocks[package][block][i].docBlock['@markup'].join('') %></div>"></iframe>
+							<iframe width="100%" seamless srcdoc="<%= blocks[package][block][i].external.join('') %><style>*{margin:0;padding:0}<%= blocks[package][block][i].css %></style><div id='markup'><%= blocks[package][block][i].docBlock['@markup'].join('') %></div>"></iframe>
 						</div>
 						<pre><code class="html"><%= blocks[package][block][i].docBlock['@markup'].join('') %></code></pre>
 						<% } %>

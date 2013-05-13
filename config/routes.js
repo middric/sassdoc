@@ -3,12 +3,14 @@ module.exports = function (app) {
 		var sassDirectory = app.get('configuration'),
 			SassFiles = require('../models/SassFiles.js'),
 			SassDoc = require('../models/SassDoc.js'),
-			SassParser = require('../models/SassParser.js');
+			SassParser = require('../models/SassParser.js'),
+			config = app.get('configuration');
 
-		SassFiles.findFiles(sassDirectory);
+		SassFiles.findFiles(config.root + '/' + config.sassDirectory);
 		var files = SassFiles.readFiles(),
 			blocks = [],
 			toParse;
+
 		for (var file in files) {
 			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage));
 		}
@@ -17,14 +19,24 @@ module.exports = function (app) {
 			for (var block in blocks[package]) {
 				for (var j = 0; j < blocks[package][block].length; j++) {
 					toParse = "@import \"" + blocks[package][block][j].filename + "\"; " + blocks[package][block][j].codeBlock;
-					for (var include in blocks[package][block][j].docBlock['@import']) {
-						toParse = "@import \"" + sassDirectory + '/' + blocks[package][block][j].docBlock['@import'][include] + "\";\n" + toParse;
+					for (var include in config.imports) {
+						toParse = "@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";\n" + toParse;
 					}
-					toParse = "@import \"compass\";\n" + toParse;
+					for (var include in blocks[package][block][j].docBlock['@import']) {
+						toParse = "@import \"" + config.root + '/' + config.sassDirectory + '/' + blocks[package][block][j].docBlock['@import'][include] + "\";\n" + toParse;
+					}
+					if (config.useCompass) {
+						toParse = "@import \"compass\";\n" + toParse;
+					}
 					if (blocks[package][block][j].docBlock['@usage']) {
 						toParse += blocks[package][block][j].docBlock['@usage'];
 					}
 					blocks[package][block][j].css = SassParser.parse(toParse);
+
+					blocks[package][block][j].external = [];
+					for (var external in config.externalCSS) {
+						blocks[package][block][j].external.push('<link rel="stylesheet" href="' + config.externalCSS[external] + '" />');
+					}
 				}
 			}
 		}
