@@ -62,7 +62,14 @@
 		</div>
 		<script type="text/javascript">
 			$('iframe').load(function () {
-				$(this).height($('#markup',$(this).contents()).outerHeight());
+				var iframe = $(this),
+					srcdoc = iframe.attr('srcdoc');
+
+				// No srcdoc support
+				if (!iframe.contents().find('#markup').length) {
+					iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
+				}
+				iframe.height($('#markup', iframe.contents()).outerHeight());
 			})
 			$('pre').each(function (i, e) {
 				hljs.highlightBlock(e);
