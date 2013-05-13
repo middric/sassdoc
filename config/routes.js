@@ -17,9 +17,10 @@ module.exports = function (app) {
 			for (var block in blocks[package]) {
 				for (var j = 0; j < blocks[package][block].length; j++) {
 					toParse = "@import \"" + blocks[package][block][j].filename + "\"; " + blocks[package][block][j].codeBlock;
-					if (blocks[package][block][j].docBlock['@import']) {
-						toParse = "@import \"" + __dirname + '/../' + blocks[package][block][j].docBlock['@import'] + "\";\n" + toParse;
+					for (var include in blocks[package][block][j].docBlock['@import']) {
+						toParse = "@import \"" + sassDirectory + '/' + blocks[package][block][j].docBlock['@import'][include] + "\";\n" + toParse;
 					}
+					toParse = "@import \"compass\";\n" + toParse;
 					if (blocks[package][block][j].docBlock['@usage']) {
 						toParse += blocks[package][block][j].docBlock['@usage'];
 					}

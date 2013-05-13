@@ -86,12 +86,12 @@ var SassDoc = function () {
 					if (lines[i].match(/^\s?\*/)) {
 						if (tag = matchesTag(lines[i])) {
 							if (!docBlock[tag[0]]) {
-								docBlock[tag[0]] = '';
+								docBlock[tag[0]] = [];
 							}
 							if (!tag[1]) {
 								docBlock[tag[0]] = true;
 							} else {
-								docBlock[tag[0]] += tag[1];
+								docBlock[tag[0]].push(tag[1]);
 							}
 						}
 						continue;
