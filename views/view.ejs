@@ -41,9 +41,6 @@
 						<pre><code class="html"><%= blocks[package][block][i].docBlock['@extends'] %></code></pre>
 						<% } %>
 
-						<h3>Sass</h3>
-						<pre><code class="css"><%= blocks[package][block][i].codeBlock %></code></pre> 
-
 						<% if (blocks[package][block][i].docBlock['@markup']) { %>
 						<h3>Example</h3>
 						<div class="styleguide-markup">
@@ -51,6 +48,9 @@
 						</div>
 						<pre><code class="html"><%= blocks[package][block][i].docBlock['@markup'].join('') %></code></pre>
 						<% } %>
+
+						<h3>Sass</h3>
+						<pre><code class="css"><%= blocks[package][block][i].codeBlock %></code></pre> 
 					</div>
 					<% } %>
 				</div>

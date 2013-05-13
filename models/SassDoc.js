@@ -66,10 +66,11 @@ var SassDoc = function () {
 		},
 
 		// Splits Sass source code into documented parts
-		split: function (file, package) {
+		split: function (file, package, app) {
 			var lines = file.output.split("\n"),
 				parts = [],
 				recording = false,
+				config = app.get('configuration'),
 				docBlock, codeBlock, tag;
 
 			for(var i = 0; i < lines.length; i++) {
@@ -98,6 +99,7 @@ var SassDoc = function () {
 					}
 
 					if (lines[i].match(/[^\s\n\r]+/)) {
+						lines[i] = lines[i].replace(/url\(\'?(\.\.\/)+([^)]*)\'?\)/, 'url(' + config.assetUrl + '/$2)');
 						codeBlock.push(lines[i]);
 						continue;
 					}

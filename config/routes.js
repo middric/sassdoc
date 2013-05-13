@@ -12,7 +12,7 @@ module.exports = function (app) {
 			toParse;
 
 		for (var file in files) {
-			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage));
+			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage, app));
 		}
 		blocks = SassDoc.sort(blocks);
 		for (var package in blocks) {
