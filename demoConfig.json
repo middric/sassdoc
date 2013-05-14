@@ -1,4 +1,7 @@
 {
 	"sassDirectory": "public/sass",
-	"useCompass": true
+	"useCompass": true,
+	"externalCSS": [
+		"http://localhost:3000/bootstrap/css/bootstrap.min.css"
+	]
 }
