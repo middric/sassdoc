@@ -13,6 +13,7 @@ module.exports = function (args, app) {
 	} catch (err) {
 		throw new e.InvalidJSONFile();
 	}
-	json.root = args[2].replace(/(.*)\/.+\.json$/i, '$1');
+	json.root = fs.realpathSync(args[2]);
+	json.root = json.root.replace(/(.*)\/.+\.json$/i, '$1');
 	return json;
 };

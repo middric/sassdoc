@@ -13,6 +13,7 @@ var e = require('../config/exceptions.js'),
 			try {
 				this.files = wrench.readdirSyncRecursive(dir);
 			} catch(err) {
+				console.log(err);
 				throw new e.DirectoryDoesNotExist();
 			}
 
