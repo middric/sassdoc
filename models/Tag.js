@@ -8,6 +8,10 @@ var Tag = function (k, v) {
 
 			getValue: function () {
 				return value;
+			},
+
+			isVariable: function () {
+				return key === 'variable';
 			}
 		};
 

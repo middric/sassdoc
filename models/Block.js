@@ -9,6 +9,8 @@ var Tag = require('../models/Tag.js'),
 	}
 
 	return {
+		isVariable: false,
+
 		addLines: function(input) {
 			lines.push(input);
 		},
@@ -22,6 +24,9 @@ var Tag = require('../models/Tag.js'),
 			for (; i >= 0; i--) {
 				if (tag = Tag.isValid(lines[i])) {
 					tags.unshift(tag);
+					if (tag.isVariable()) {
+						this.isVariable = true;
+					}
 					continue;
 				}
 
@@ -68,6 +73,19 @@ Block.getBlocks = function (input) {
 	}
 	return blocks;
 };
+
+Block.sort = function (blocks) {
+	blocks.sort(function (a, b) {
+		if (a.isVariable && !b.isVariable) {
+			return -1;
+		} else if (!a.isVariable && b.isVariable) {
+			return 1;
+		}
+		return 0;
+	});
+
+	return blocks;
+}
 
 // Export the Block class rather than a Block object
 module.exports = Block;

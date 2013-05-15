@@ -13,11 +13,14 @@ module.exports = function (app) {
 			toParse;
 
 
-		var newBlocks = Block.getBlocks(files[1].output);
+		var blocks = Block.getBlocks(files[1].output);
 		for (var i = newBlocks.length - 1; i >= 0; i--) {
-			newBlocks[i].parse();
+			blocks[i].parse();
 		}
+		blocks = Block.sort(newBlocks);
 
+		// Old code below
+		blocks = [];
 		for (var file in files) {
 			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage, app));
 		}
