@@ -2,7 +2,7 @@ var e = require('../config/exceptions.js'),
 	fs = require('fs'),
 	buf = require('buffer'),
 	wrench = require('wrench'),
-	SassFiles = function () {
+	Files = function () {
 
 	return {
 		dir: null,
@@ -13,8 +13,7 @@ var e = require('../config/exceptions.js'),
 			try {
 				this.files = wrench.readdirSyncRecursive(dir);
 			} catch(err) {
-				console.log(err);
-				throw new e.DirectoryDoesNotExist();
+				throw new e.DirectoryDoesNotExist(err.stdout);
 			}
 
 			for (var i = 0; i < this.files.length; i++) {
@@ -40,7 +39,7 @@ var e = require('../config/exceptions.js'),
 			try {
 				output = fs.readFileSync(this.dir + file);
 			} catch(err) {
-				throw new e.UnableToReadFile();
+				throw new e.UnableToReadFile(err.stdout);
 			}
 
 			output = this.readBuffer(output);
@@ -53,4 +52,4 @@ var e = require('../config/exceptions.js'),
 	};
 };
 
-module.exports = new SassFiles();
+module.exports = new Files();

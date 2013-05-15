@@ -1,6 +1,6 @@
 var execSync = require('execSync'),
 	e = require('../config/exceptions.js'),
-	SassParser = function () {
+	Sass = function () {
 	var sassCommand = 'sass',
 		sassSyntax = 'scss',
 		sassStyle = 'expanded',
@@ -16,8 +16,7 @@ var execSync = require('execSync'),
 			}
 			output = execSync.exec("echo '" + sass + "' | " + cmd);
 			if (output.code) {
-				console.log(cmd, output);
-				throw new e.UnableToParseSass;
+				throw new e.UnableToParseSass(output.stdout);
 			}
 			return output.stdout;
 		},
@@ -53,5 +52,8 @@ var execSync = require('execSync'),
 		}
 	};
 };
+Sass.isValid = function (input) {
+	return !input.match(/(^\/\/|^\/\*|\*\/|^\s\*\s*$)/);
+}
 
-module.exports = new SassParser();
+module.exports = Sass;

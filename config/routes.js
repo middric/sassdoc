@@ -1,15 +1,22 @@
 module.exports = function (app) {
 	var packageRoute = function (requestedPackage) {
 		var sassDirectory = app.get('configuration'),
-			SassFiles = require('../models/SassFiles.js'),
+			Files = require('../models/Files.js'),
 			SassDoc = require('../models/SassDoc.js'),
-			SassParser = require('../models/SassParser.js'),
+			Sass = new (require('../models/Sass.js')),
+			Block = require('../models/Block.js'),
 			config = app.get('configuration');
 
-		SassFiles.findFiles(config.root + '/' + config.sassDirectory);
-		var files = SassFiles.readFiles(),
+		Files.findFiles(config.root + '/' + config.sassDirectory);
+		var files = Files.readFiles(),
 			blocks = [],
 			toParse;
+
+
+		var newBlocks = Block.getBlocks(files[1].output);
+		for (var i = newBlocks.length - 1; i >= 0; i--) {
+			newBlocks[i].parse();
+		}
 
 		for (var file in files) {
 			blocks = blocks.concat(SassDoc.split(files[file], requestedPackage, app));
@@ -31,7 +38,7 @@ module.exports = function (app) {
 					if (blocks[package][block][j].docBlock['@usage']) {
 						toParse += blocks[package][block][j].docBlock['@usage'];
 					}
-					blocks[package][block][j].css = SassParser.parse(toParse);
+					blocks[package][block][j].css = Sass.parse(toParse);
 
 					blocks[package][block][j].external = [];
 					for (var external in config.externalCSS) {

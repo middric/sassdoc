@@ -8,8 +8,8 @@ var util = require('util'),
 	},
 	ExceptionFactory = function (name, defaultMessage) {
 		var exception = function (message) {
-			exception.super_.call(this, defaultMessage || message, this.constructor);
-		}
+			exception.super_.call(this, message || defaultMessage, this.constructor);
+		};
 		util.inherits(exception, AbstractException);
 		exception.prototype.name = name + 'Exception';
 		exceptions[name] = exception;
