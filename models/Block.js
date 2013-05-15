@@ -2,7 +2,7 @@ var Tag = require('../models/Tag.js'),
 	Sass = require('../models/Sass.js'),
 	Block = function (line) {
 	var lines = [],
-		tags = [], example = [], sass = [];
+		tags = {}, example = [], sass = [];
 
 	if (line) {
 		lines.push(line);
@@ -19,11 +19,19 @@ var Tag = require('../models/Tag.js'),
 			return lines.join("\n");
 		},
 
+		getTag: function (name) {
+			return tags[name];
+		},
+
 		parse: function () {
-			var tag, markup, i = lines.length - 1;
+			var tag, markup, i = lines.length - 1, tagName;
 			for (; i >= 0; i--) {
 				if (tag = Tag.isValid(lines[i])) {
-					tags.unshift(tag);
+					tagName = tag.getName();
+					if (!tags[tagName]) {
+						tags[tagName] = [];
+					}
+					tags[tagName].push(tag);
 					if (tag.isVariable()) {
 						this.isVariable = true;
 					}
@@ -85,7 +93,7 @@ Block.sort = function (blocks) {
 	});
 
 	return blocks;
-}
+};
 
 // Export the Block class rather than a Block object
 module.exports = Block;

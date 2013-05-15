@@ -14,10 +14,11 @@ module.exports = function (app) {
 
 
 		var blocks = Block.getBlocks(files[1].output);
-		for (var i = newBlocks.length - 1; i >= 0; i--) {
+		for (var i = blocks.length - 1; i >= 0; i--) {
 			blocks[i].parse();
 		}
-		blocks = Block.sort(newBlocks);
+		blocks = Block.sort(blocks);
+console.log(blocks[0]);
 
 		// Old code below
 		blocks = [];
