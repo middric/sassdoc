@@ -13,12 +13,17 @@ module.exports = function (app) {
 			toParse;
 
 
-		var blocks = Block.getBlocks(files[1].output);
-		for (var i = blocks.length - 1; i >= 0; i--) {
-			blocks[i].parse();
+		// New code
+		for (var file in files) {
+			blocks = Block.getBlocks(files[file].output);
+			for (var i = blocks.length - 1; i >= 0; i--) {
+				blocks[i].parse();
+			}
+			blocks = Block.sort(blocks);
+
+			// Parse the block
 		}
-		blocks = Block.sort(blocks);
-console.log(blocks[0]);
+
 
 		// Old code below
 		blocks = [];
@@ -29,7 +34,7 @@ console.log(blocks[0]);
 		for (var package in blocks) {
 			for (var block in blocks[package]) {
 				for (var j = 0; j < blocks[package][block].length; j++) {
-					toParse = "@import \"" + blocks[package][block][j].filename + "\"; " + blocks[package][block][j].codeBlock;
+					toParse = blocks[package][block][j].codeBlock;// "@import \"" + blocks[package][block][j].filename + "\"; ";
 					for (var include in config.imports) {
 						toParse = "@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";\n" + toParse;
 					}
