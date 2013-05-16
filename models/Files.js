@@ -30,7 +30,7 @@ var e = require('../config/exceptions.js'),
 			for (var i = 0; i < this.files.length; i++) {
 				output.push(this.readFile(this.files[i]));
 			}
-
+			
 			return output;
 		},
 

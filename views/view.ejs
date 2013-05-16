@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="http://static.sandbox.dev.bbc.co.uk/frameworks/jquery/0.2.1/sharedmodules/jquery-1.7.2.js"></script>
-		
-		<!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<head>		
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-		<link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet"  type="text/css" />-->
+		<link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet"  type="text/css" />
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
 	</head>
@@ -63,19 +61,19 @@
 			<% } %>
 		</div>
 		<script type="text/javascript">
-			// $('iframe').load(function () {
-			// 	var iframe = $(this),
-			// 		srcdoc = iframe.attr('srcdoc');
+			$('iframe').load(function () {
+				var iframe = $(this),
+					srcdoc = iframe.attr('srcdoc');
 
-			// 	// No srcdoc support
-			// 	if (!iframe.contents().find('#markup').length) {
-			// 		iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
-			// 	}
-			// 	iframe.height($('#markup', iframe.contents()).outerHeight());
-			// })
-			// $('pre').each(function (i, e) {
-			// 	hljs.highlightBlock(e);
-			// })
+				// No srcdoc support
+				if (!iframe.contents().find('#markup').length) {
+					iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
+				}
+				iframe.height($('#markup', iframe.contents()).outerHeight());
+			})
+			$('pre').each(function (i, e) {
+				hljs.highlightBlock(e);
+			})
 			$(document).ready(function () {
 				var headings = $('h1');
 				for (var i = headings.length - 1; i >= 0; i--) {

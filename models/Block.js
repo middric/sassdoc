@@ -1,8 +1,9 @@
 var Tag = require('../models/Tag.js'),
 	Sass = require('../models/Sass.js'),
-	Block = function (line) {
+	_ = require('underscore'),
+	Block = function (line, app) {
 	var lines = [],
-		tags = {}, example = [], sass = [];
+		tags = {}, example = [], sass = [], css = '';
 
 	if (line) {
 		lines.push(line);
@@ -23,9 +24,29 @@ var Tag = require('../models/Tag.js'),
 			return tags[name];
 		},
 
+		getImports: function () {
+			var config = app.get('configuration'),
+				tags = this.getTag('import'),
+				imports = [];
+
+			for (var include in config.imports) {
+				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
+			}
+
+			for (var tag in tags) {
+				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + tags[tag].getValue() + "\";");
+			}
+
+			return imports;
+		},
+
+		getCSS: function () {
+			return css;
+		},
+
 		parse: function () {
-			var tag, markup, i = lines.length - 1, tagName;
-			for (; i >= 0; i--) {
+			var tag, markup, i = 0, tagName, toParse;
+			for (; i < lines.length; i++) {
 				if (tag = Tag.isValid(lines[i])) {
 					tagName = tag.getName();
 					if (!tags[tagName]) {
@@ -39,19 +60,40 @@ var Tag = require('../models/Tag.js'),
 				}
 
 				if (markup = Tag.isMarkup(lines[i])) {
-					example.unshift(markup);
+					example.push(markup);
 					continue;
 				}
 
-				if (Sass.isValid(lines[i])) {
-					sass.unshift(lines[i]);
+				if (_.size(tags) && Sass.isValid(lines[i])) {
+					sass.push(lines[i]);
 				}
+			}
+
+			if (_.size(tags)) {
+				toParse = this.getImports();
+				toParse = toParse.join("\n") + sass.join("\n");
+				css = Sass.parse(toParse);
 			}
 		}
 	};
 };
 
-Block.getBlocks = function (input) {
+Block.getPackages = function (blocks) {
+	var packages = [], i = blocks.length - 1, blockPackages, j;
+
+	for (; i >= 0; i--) {
+		blockPackages = blocks[i].getTag('package');
+		for (j in blockPackages) {
+			if (packages.indexOf(blockPackages[j].getValue()) == -1) {
+				packages.push(blockPackages[j].getValue());
+			}
+		}
+	};
+
+	return packages;
+};
+
+Block.getBlocks = function (input, app) {
 	var lines = input.split("\n"), line = '',
 		blocks = [],
 		currentBlock = null,
@@ -59,7 +101,7 @@ Block.getBlocks = function (input) {
 
 	while ((line = lines.shift()) !== undefined) {
 		if (line.match(/^\/\*\*/)) {
-			blocks.push(new Block(line));
+			blocks.push(new Block(line, app));
 			currentBlock = blocks.length - 1;
 			openCount = 0, closeCount = 0;
 			continue;

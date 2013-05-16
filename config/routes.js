@@ -15,15 +15,13 @@ module.exports = function (app) {
 
 		// New code
 		for (var file in files) {
-			blocks = Block.getBlocks(files[file].output);
+			blocks = Block.getBlocks(files[file].output, app);
 			for (var i = blocks.length - 1; i >= 0; i--) {
 				blocks[i].parse();
 			}
 			blocks = Block.sort(blocks);
-
-			// Parse the block
 		}
-
+		var packages = Block.getPackages(blocks);
 
 		// Old code below
 		blocks = [];
@@ -57,7 +55,6 @@ module.exports = function (app) {
 			}
 		}
 
-		var packages = SassDoc.getPackages();
 		return {currentPackage: requestedPackage, packages: packages, blocks: blocks};
 	};
 

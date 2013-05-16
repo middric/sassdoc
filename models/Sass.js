@@ -1,11 +1,10 @@
 var execSync = require('execSync'),
 	e = require('../config/exceptions.js'),
+	sassCommand = 'sass',
+	sassSyntax = 'scss',
+	sassStyle = 'expanded',
+	useCompass = true,
 	Sass = function () {
-	var sassCommand = 'sass',
-		sassSyntax = 'scss',
-		sassStyle = 'expanded',
-		useCompass = true;
-
 	return {
 		parse: function (sass) {
 			var cmd = sassCommand + ' -s -t ' + sassStyle + ' --' + sassSyntax,
@@ -52,6 +51,21 @@ var execSync = require('execSync'),
 		}
 	};
 };
+
+Sass.parse = function (input) {
+	var cmd = sassCommand + ' -s -t ' + sassStyle + ' --' + sassSyntax,
+		output;
+
+	if (useCompass) {
+		cmd += ' --compass';
+	}
+	output = execSync.exec("echo '" + input + "' | " + cmd);
+	if (output.code) {
+		console.log(input);
+		throw new e.UnableToParseSass(output.stdout);
+	}
+	return output.stdout;
+}
 Sass.isValid = function (input) {
 	return !input.match(/(^\/\/|^\/\*|\*\/|^\s\*\s*$)/);
 }
