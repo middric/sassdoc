@@ -3,7 +3,7 @@ var Tag = require('../models/Tag.js'),
 	_ = require('underscore'),
 	Block = function (line, app) {
 	var lines = [],
-		tags = {}, example = [], sass = [], css = '';
+		tags = {}, markup = [], sass = [], css = '';
 
 	if (line) {
 		lines.push(line);
@@ -21,20 +21,45 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getTag: function (name) {
+			if (!tags[name]) {
+				return;
+			}
+
 			return tags[name];
+		},
+
+		getTagValue: function (name) {
+			var tag = this.getTag(name),
+				value = '';
+
+			if (tag) {
+				for (var i = tag.length - 1; i >= 0; i--) {
+					value = tag[i].getValue() + "\n" + value;
+				}
+			}
+
+			return value;
+		},
+
+		getMarkup: function () {
+			return markup.join("\n");
+		},
+
+		getSass: function () {
+			return sass.join("\n");
 		},
 
 		getImports: function () {
 			var config = app.get('configuration'),
-				tags = this.getTag('import'),
+				importStatements = this.getTag('import'),
 				imports = [];
 
 			for (var include in config.imports) {
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
 
-			for (var tag in tags) {
-				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + tags[tag].getValue() + "\";");
+			for (var i in importStatements) {
+				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + importStatements[i].getValue() + "\";");
 			}
 
 			return imports;
@@ -45,22 +70,22 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		parse: function () {
-			var tag, markup, i = 0, tagName, toParse;
+			var line, i = 0, tagName, toParse;
 			for (; i < lines.length; i++) {
-				if (tag = Tag.isValid(lines[i])) {
-					tagName = tag.getName();
+				if (line = Tag.isValid(lines[i])) {
+					tagName = line.getName();
 					if (!tags[tagName]) {
 						tags[tagName] = [];
 					}
-					tags[tagName].push(tag);
-					if (tag.isVariable()) {
+					tags[tagName].push(line);
+					if (line.isVariable()) {
 						this.isVariable = true;
 					}
 					continue;
 				}
 
-				if (markup = Tag.isMarkup(lines[i])) {
-					example.push(markup);
+				if (line = Tag.isMarkup(lines[i])) {
+					markup.push(line);
 					continue;
 				}
 
@@ -79,14 +104,27 @@ var Tag = require('../models/Tag.js'),
 };
 
 Block.getPackages = function (blocks) {
-	var packages = [], i = blocks.length - 1, blockPackages, j;
+	var packages = {}, i = blocks.length - 1, blockPackages, key, j;
+
+	packages.global = {url: 'global', name: 'Global', blocks: []};
 
 	for (; i >= 0; i--) {
 		blockPackages = blocks[i].getTag('package');
-		for (j in blockPackages) {
-			if (packages.indexOf(blockPackages[j].getValue()) == -1) {
-				packages.push(blockPackages[j].getValue());
+		if (blockPackages) {
+			for (j in blockPackages) {
+				key = blockPackages[j].getValue().replace(/[^\w]/g, '_').toLowerCase();
+				if (!packages[key]) {
+					packages[key] = {
+						url: key,
+						name: blockPackages[j].getValue(),
+						blocks: [blocks[i]]
+					};
+				} else {
+					packages[key].blocks.unshift(blocks[i]);
+				}
 			}
+		} else {
+			packages.global.blocks.unshift(blocks[i]);
 		}
 	};
 

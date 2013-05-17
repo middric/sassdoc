@@ -1,7 +1,7 @@
 @import '_colors';
 
 body {
-	padding: 20px;
+    padding: 20px;
     font-size: 13px;
 }
 
@@ -10,30 +10,38 @@ body {
  * @name Headings
  * @description Heading styles
  * @import stylesheets/_colors.scss
+ * @external http://static.bbci.co.uk/frameworks/barlesque/2.45.9/orb/4/style/orb.css
  *
  * <h1>Heading 1</h1>
- * <h2>Heading 2</h2>
- * <h3>Heading 3</h3>
  */
 h1 {
-	font-size: 18px;
+    font-size: 18px;
 }
 h2, h3 {
-	line-height: 1.2;
-	font-size: 16px;
+    line-height: 1.2;
+    font-size: 16px;
 }
+/**
+ * @package Typography
+ * @name Headings
+ * @description Heading styles
+ * @import stylesheets/_colors.scss
+ * @external http://static.bbci.co.uk/frameworks/barlesque/2.45.9/orb/4/style/orb.css
+ *
+ * <h3>Heading 3</h3>
+ */
 h3 {
-	font-weight: 400;
-	background: #dfdfff;
-	border: 1px solid $pale-squid;
-	border-bottom: 0;
-	padding: 10px;
-	margin-bottom: 0;
+    font-weight: 400;
+    background: #dfdfff;
+    border: 1px solid $pale-squid;
+    border-bottom: 0;
+    padding: 10px;
+    margin-bottom: 0;
 }
 
 .description {
-	display: block;
-	margin-bottom: 2em;
+    display: block;
+    margin-bottom: 2em;
 }
 
 /**
@@ -46,11 +54,11 @@ h3 {
  * </div>
  */
 .styleguide-markup {
-	border: 1px solid $pale-squid;
-	border-bottom: 0;
-	position: relative;
-	overflow: hidden;
-	padding: 20px;
+    border: 1px solid $pale-squid;
+    border-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
 }
 
 /**
@@ -60,9 +68,9 @@ h3 {
  * <div class="border">Lorem ipsum dolor sit amet.</div>
  */
 .border {
-	border: 1px dotted $pale-squid;
-	padding: 10px 20px 20px;
-	margin-bottom: 20px;
+    border: 1px dotted $pale-squid;
+    padding: 10px 20px 20px;
+    margin-bottom: 20px;
 }
 
 /**
@@ -71,11 +79,11 @@ h3 {
  * <pre>Lorem ipsum dolor sit amet.</pre>
  */
 pre {
-	background: #f8f8ff;
-	border-radius: 0;
-	&, code {
-	 	font-family: 'Source Code Pro', monospace;
-	 	font-size: 14px;
-	 	line-height: 2;
-	}
+    background: #f8f8ff;
+    border-radius: 0;
+    &, code {
+        font-family: 'Source Code Pro', monospace;
+        font-size: 14px;
+        line-height: 2;
+    }
 }

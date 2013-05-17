@@ -13,52 +13,40 @@
 				<div class="navbar-inner">
 					<a class="brand" href="#">SassDoc</a>
 					<ul class="nav">
-						<% for(var package in packages) { %>
-						<li class="<%= (currentPackage == packages[package]) ? 'active' : '' %>"><a href="/packages/<%= packages[package] %>"><%= packages[package] %></a></li>
+						<% for(var i in packages) { %>
+						<li class="<%= (currentPackage.url == packages[i].url) ? 'active' : '' %>"><a href="/packages/<%= packages[i].url %>"><%= packages[i].name %></a></li>
 						<% } %>
 					</ul>
 				</div>
 			</div>
 
-			<% for(var package in blocks) { %>
-			<% for(var block in blocks[package]) { %>
-			<% if (blocks[package][block].length) { %>
-			<h1><%= block %></h1>
-  			<div class="row-fluid">
-  				<div class="span12">
-					<% for(var i = 0; i < blocks[package][block].length; i++) { %>
-					<div class="border">
-						<h2><%= blocks[package][block][i].docBlock['@name'] || '' %></h2>
-						<div class="description"><%- blocks[package][block][i].docBlock['@description'] || '' %></div>
+			<h1><%= currentPackage.name %></h1>
+			<% for(var i = 0; i < blocks.length; i++) { %>
+				<h2><%= blocks[i].getTagValue('name') %></h2>
+				<div class="description"><%- blocks[i].getTagValue('description') || '' %></div>
 
-						<% if (blocks[package][block][i].docBlock['@import']) { %>
-						<h3>Imports</h3>
-						<pre><code class="html"><%= blocks[package][block][i].docBlock['@import'] %></code></pre>
-						<% } %>
+				<% if (blocks[i].getTag('import')) { %>
+				<h3>Imports</h3>
+				<pre><code class="html"><%= blocks[i].getTagValue('import') %></code></pre>
+				<% } %>
 
-						<% if (blocks[package][block][i].docBlock['@extends']) { %>
-						<h3>Extends</h3>
-						<pre><code class="html"><%= blocks[package][block][i].docBlock['@extends'] %></code></pre>
-						<% } %>
+				<% if (blocks[i].getTag('extends')) { %>
+				<h3>Extends</h3>
+				<pre><code class="html"><%= blocks[i].getTagValue('extends') %></code></pre>
+				<% } %>
 
-						<% if (blocks[package][block][i].docBlock['@markup']) { %>
-						<h3>Example</h3>
-						<div class="styleguide-markup">
-							<iframe width="100%" seamless srcdoc="<%= blocks[package][block][i].external.join('') %><style>*{margin:0;padding:0}<%= blocks[package][block][i].css %></style><div id='markup'><%= blocks[package][block][i].docBlock['@markup'].join('') %></div>"></iframe>
-						</div>
-						<pre><code class="html"><%= blocks[package][block][i].docBlock['@markup'].join('') %></code></pre>
-						<% } %>
-
-						<h3>Sass</h3>
-						<pre><code class="scss"><%= blocks[package][block][i].codeBlock %></code></pre> 
-					</div>
-					<% } %>
+				<% if (blocks[i].getMarkup()) { %>
+				<h3>Example</h3>
+				<div class="styleguide-markup">
+					<iframe width="100%" seamless srcdoc="<link href='<%= blocks[i].getTagValue('external') %>' rel='stylesheet' /><style>*{margin:0;padding:0}<%= blocks[i].getCSS() %></style><div id='markup'><%= blocks[i].getMarkup() %></div>"></iframe>
 				</div>
-				<hr />
-			</div>
+				<pre><code class="html"><%= blocks[i].getMarkup() %></code></pre>
+				<% } %>
+
+				<h3>Sass</h3>
+				<pre><code class="scss"><%= blocks[i].getSass() %></code></pre> 
 			<% } %>
-			<% } %>
-			<% } %>
+			
 		</div>
 		<script type="text/javascript">
 			$('iframe').load(function () {

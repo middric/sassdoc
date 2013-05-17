@@ -31,7 +31,8 @@ Tag.tags = [
 	'usage',
 	'import',
 	'extends',
-	'markup'
+	'markup',
+	'external'
 ];
 
 Tag.isValid = function (input) {
