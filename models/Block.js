@@ -69,6 +69,23 @@ var Tag = require('../models/Tag.js'),
 			return css;
 		},
 
+		getExternal: function () {
+			var config = app.get('configuration'),
+				externals = this.getTag('external'),
+				linkTag = '<link href="%s" rel="stylesheet" />',
+				markup = [];
+
+			if (externals) {
+				for (var i = externals.length - 1; i >= 0; i--) {
+					markup.unshift(linkTag.replace('%s', externals[i].getValue()));
+				}
+			}
+
+			markup.unshift(linkTag.replace('%s', config.externalCSS));
+
+			return markup.join('');
+		},
+
 		parse: function () {
 			var line, i = 0, tagName, toParse;
 			for (; i < lines.length; i++) {

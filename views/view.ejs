@@ -38,7 +38,7 @@
 				<% if (blocks[i].getMarkup()) { %>
 				<h3>Example</h3>
 				<div class="styleguide-markup">
-					<iframe width="100%" seamless srcdoc="<link href='<%= blocks[i].getTagValue('external') %>' rel='stylesheet' /><style>*{margin:0;padding:0}<%= blocks[i].getCSS() %></style><div id='markup'><%= blocks[i].getMarkup() %></div>"></iframe>
+					<iframe width="100%" seamless srcdoc="<%= blocks[i].getExternal() %><style>*{margin:0;padding:0}<%= blocks[i].getCSS() %></style><div id='markup'><%= blocks[i].getMarkup() %></div>"></iframe>
 				</div>
 				<pre><code class="html"><%= blocks[i].getMarkup() %></code></pre>
 				<% } %>
@@ -46,7 +46,7 @@
 				<h3>Sass</h3>
 				<pre><code class="scss"><%= blocks[i].getSass() %></code></pre> 
 			<% } %>
-			
+
 		</div>
 		<script type="text/javascript">
 			$('iframe').load(function () {
