@@ -12,6 +12,7 @@
  */
 @mixin sidebar {
     @include box;
+    top: 16px;
     overflow: hidden;
     ul, li {
     	list-style: none;
