@@ -1,4 +1,5 @@
 @import '_colors';
+@import '_sidebar';
 
 body {
     padding: 20px;
@@ -41,6 +42,10 @@ h3 {
 .description {
     display: block;
     margin-bottom: 2em;
+}
+
+.sidebar {
+    @include sidebar
 }
 
 /**
