@@ -1,30 +1,40 @@
 !!!
 html
-	head(lang='en')
-		title SassDoc
-		block meta
-			meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		block js
-			script(src="http://code.jquery.com/jquery-1.9.1.min.js")
-			script(src="http://yandex.st/highlightjs/7.3/highlight.min.js")
-			script(src="/bootstrap/js/bootstrap.min.js")
-		block css
-			link(href="http://yandex.st/highlightjs/7.3/styles/github.min.css", rel="stylesheet",  type="text/css")
-			link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
-			link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap-responsive.min.css")
-			link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
-	body
-		div.container-fluid
-			div.header
-				block header
-			
-			div.row-fluid
-				div.span2.sidebar
-					div(data-spy='affix')
-						block sidebar
+    head(lang='en')
+        title SassDoc
+        block meta
+            meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        block js
+            script(src="http://code.jquery.com/jquery-1.9.1.min.js")
+            script(src="http://yandex.st/highlightjs/7.3/highlight.min.js")
+            script(src="/bootstrap/js/bootstrap.min.js")
+        block css
+            link(href="http://yandex.st/highlightjs/7.3/styles/github.min.css", rel="stylesheet",  type="text/css")
+            link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
+            link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap-responsive.min.css")
+            link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
+    body
+        div.container-fluid
+            div.header
+                block header
+            
+            div.row-fluid
+                div.span3.sidebar-container
+                    div.sidebar(data-spy='affix')
+                        block sidebar
 
-				div.span10.content
-					block content
+                div.span9.content
+                    block content
 
-			div.footer
-				block footer
+            div.footer
+                block footer
+                    script(type="text/javascript")
+                        function affixWidth() {
+                            var affix = $('.sidebar');
+                            var width = affix.width();
+                            affix.width(width);
+                        }
+
+                        $(document).ready(function () {
+                            affixWidth();
+                        });

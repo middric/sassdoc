@@ -1,9 +1,22 @@
-@import '_colors';
-@import '_sidebar';
+@import 'colors';
+@import 'sidebar';
+@import 'block';
 
 body {
+    background: #fafafa;
     padding: 20px;
     font-size: 13px;
+}
+
+a {
+    color: #333;
+    padding: 0.5ex 1ex;
+    margin: -0.5ex -1ex;
+    &:hover {
+        background: #333;
+        color: #fff;
+        text-decoration: none;
+    }
 }
 
 /**
@@ -44,6 +57,9 @@ h3 {
     margin-bottom: 2em;
 }
 
+.block {
+    @include block
+}
 .sidebar {
     @include sidebar
 }
@@ -67,6 +83,7 @@ h3 {
 
 /**
  * @name Component borders
+ * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae mauris et elit faucibus adipiscing. In sem quam, lobortis non eleifend porta, commodo ultricies ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dolor sapien, imperdiet a blandit scelerisque, mattis sed est. Integer rutrum, nulla et scelerisque laoreet, dui augue gravida nunc, sed condimentum lacus est eget metus. Mauris non arcu id dolor vulputate convallis. Sed tincidunt quam et turpis consectetur posuere. Phasellus non magna ut mauris ullamcorper accumsan varius nec nunc.
  * @import stylesheets/_colors.scss
  *
  * <div class="border">Lorem ipsum dolor sit amet.</div>
