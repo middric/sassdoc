@@ -66,7 +66,7 @@ var Tag = require('../models/Tag.js'),
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + importStatements[i].getValue() + "\";");
 			}
 
-			return imports;
+			return imports.join("\n");
 		},
 
 		getCSS: function () {
@@ -109,7 +109,6 @@ var Tag = require('../models/Tag.js'),
 					markup.push(line);
 					continue;
 				}
-
 				if (_.size(tags) && Sass.isValid(lines[i])) {
 					sass.push(lines[i]);
 				}
@@ -117,7 +116,8 @@ var Tag = require('../models/Tag.js'),
 
 			if (_.size(tags)) {
 				toParse = this.getImports();
-				toParse = toParse.join("\n") + sass.join("\n");
+				toParse += sass.join("\n");
+				toParse += this.getTagValue('usage');
 				css = Sass.parse(toParse);
 			}
 		}
@@ -166,10 +166,10 @@ Block.getBlocks = function (input, app) {
 			continue;
 		}
 		if (currentBlock !== null) {
-			if (line.match(/\{/)) {
+			if (!Tag.isValid(line) && line.match(/\{/)) {
 				openCount++;
 			}
-			if (line.match(/\}/)) {
+			if (!Tag.isValid(line) && line.match(/\}/)) {
 				closeCount++;
 			}
 			if (openCount && closeCount && openCount === closeCount) {
