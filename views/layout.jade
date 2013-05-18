@@ -1,0 +1,16 @@
+!!!
+html
+	head
+		title SassDoc
+		block js
+			script(src="http://code.jquery.com/jquery-1.9.1.min.js")
+			script(src="http://yandex.st/highlightjs/7.3/highlight.min.js")
+		block css		
+			link(href="http://yandex.st/highlightjs/7.3/styles/github.min.css", rel="stylesheet",  type="text/css")
+			link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
+			link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
+	body
+		div.container-fluid
+			block header
+			block content
+			block footer

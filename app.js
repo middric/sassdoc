@@ -14,6 +14,7 @@ app.use(sass.middleware({
 app.set('views', __dirname + '/views');
 app.engine('.html', require('jade').__express);
 app.set('view engine', 'jade');
+app.set('view options', {layout: false});
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());

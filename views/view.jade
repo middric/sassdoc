@@ -1,61 +1,55 @@
-doctype 5
-html(lang="en")
-	head	
-		script(src="http://code.jquery.com/jquery-1.9.1.min.js")
-		script(src="http://yandex.st/highlightjs/7.3/highlight.min.js")
-		link(href="http://yandex.st/highlightjs/7.3/styles/github.min.css", rel="stylesheet",  type="text/css")
-		link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
-		link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
+extends layout
 
-	body
-		div.container-fluid
-			div.navbar
-				div.navbar-inner
-					a.brand(href="#") SassDoc
-					ul.nav
-						each package in packages
-							- var activeClass = ((currentPackage.url == package.url) ? 'active' : '')
-							li(class=activeClass)
-								a(href="/packages/#{package.url}")= package.name
+block append header
+    div.navbar
+        div.navbar-inner
+            a.brand(href="#") SassDoc
+            ul.nav
+                each package in packages
+                    - var activeClass = ((currentPackage.url == package.url) ? 'active' : '')
+                    li(class=activeClass)
+                        a(href="/packages/#{package.url}")= package.name
 
-			h1= currentPackage.name
+block append content
+    h1= currentPackage.name
 
-			each block in blocks
-				h2= block.getTagValue('name')
-				div(class="description")!= block.getTagValue('description')
+    each block in blocks
+        h2= block.getTagValue('name')
+        div(class="description")!= block.getTagValue('description')
 
-				if block.getTag('import')
-					h3 Imports
-					pre
-						code(class="html")= block.getTagValue('import')
+        if block.getTag('import')
+            h3 Imports
+            pre
+                code(class="html")= block.getTagValue('import')
 
-				if block.getTag('extends')
-					h3 Extends
-					pre
-						code(class="html")= block.getTagValue('extends')
+        if block.getTag('extends')
+            h3 Extends
+            pre
+                code(class="html")= block.getTagValue('extends')
 
-				if block.getMarkup()
-					h3 Example
-					div(class="styleguide-markup")
-						iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div>")
-					pre
-						code(class="html")= block.getMarkup()
+        if block.getMarkup()
+            h3 Example
+            div(class="styleguide-markup")
+                iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div>")
+            pre
+                code(class="html")= block.getMarkup()
 
-				h3 Sass
-				pre
-					code(class="scss")= block.getSass()
+        h3 Sass
+        pre
+            code(class="scss")= block.getSass()
 
-		script(type="text/javascript")
-			$('iframe').load(function () {
-				var iframe = $(this),
-					srcdoc = iframe.attr('srcdoc');
+block append footer
+    script(type="text/javascript")
+        $('iframe').load(function () {
+            var iframe = $(this),
+                srcdoc = iframe.attr('srcdoc');
 
-				// No srcdoc support
-				if (!iframe.contents().find('#markup').length) {
-					iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
-				}
-				iframe.height($('#markup', iframe.contents()).outerHeight());
-			})
-			$('pre').each(function (i, e) {
-				hljs.highlightBlock(e);
-			})
+            // No srcdoc support
+            if (!iframe.contents().find('#markup').length) {
+                iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
+            }
+            iframe.height($('#markup', iframe.contents()).outerHeight());
+        })
+        $('pre').each(function (i, e) {
+            hljs.highlightBlock(e);
+        })
