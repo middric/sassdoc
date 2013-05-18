@@ -20,6 +20,10 @@ var Tag = require('../models/Tag.js'),
 			return lines.join("\n");
 		},
 
+		getID: function () {
+			return this.getTagValue('name').replace(/[^\w]/g, '_');
+		},
+
 		getTag: function (name) {
 			if (!tags[name]) {
 				return;
@@ -30,15 +34,15 @@ var Tag = require('../models/Tag.js'),
 
 		getTagValue: function (name) {
 			var tag = this.getTag(name),
-				value = '';
+				value = [];
 
 			if (tag) {
 				for (var i = tag.length - 1; i >= 0; i--) {
-					value = tag[i].getValue() + "\n" + value;
+					value.unshift(tag[i].getValue());
 				}
 			}
 
-			return value;
+			return value.join("\n");
 		},
 
 		getMarkup: function () {

@@ -10,11 +10,18 @@ block append header
                     li(class=activeClass)
                         a(href="/packages/#{package.url}")= package.name
 
+block append sidebar
+    ul
+        each block in blocks
+            li
+                a(href="##{block.getID()}")= block.getTagValue('name')
+
 block append content
     h1= currentPackage.name
 
     each block in blocks
-        h2= block.getTagValue('name')
+        h2
+            a(name=block.getID())= block.getTagValue('name')
         div(class="description")!= block.getTagValue('description')
 
         if block.getTag('import')
