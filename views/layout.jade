@@ -1,16 +1,30 @@
 !!!
 html
-	head
+	head(lang='en')
 		title SassDoc
+		block meta
+			meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		block js
 			script(src="http://code.jquery.com/jquery-1.9.1.min.js")
 			script(src="http://yandex.st/highlightjs/7.3/highlight.min.js")
-		block css		
+			script(src="/bootstrap/js/bootstrap.min.js")
+		block css
 			link(href="http://yandex.st/highlightjs/7.3/styles/github.min.css", rel="stylesheet",  type="text/css")
 			link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
+			link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap-responsive.min.css")
 			link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
 	body
 		div.container-fluid
-			block header
-			block content
-			block footer
+			div.header
+				block header
+			
+			div.row-fluid
+				div.span2.sidebar
+					div(data-spy='affix')
+						block sidebar
+
+				div.span10.content
+					block content
+
+			div.footer
+				block footer
