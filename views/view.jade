@@ -8,11 +8,12 @@ block append header
                 a(href="/packages/#{package.url}")= package.name
 
 block append sidebar
-    h1 Components
-    ul
-        each block in blocks
-            li
-                a(href="##{block.getID()}")= block.getTagValue('name')
+    div
+        h1 Components
+        ul
+            each block in blocks
+                li
+                    a(href="##{block.getID()}")= block.getTagValue('name')
 
 block append content
     each block in blocks
@@ -50,7 +51,4 @@ block append footer
                 iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
             }
             iframe.height($('#markup', iframe.contents()).outerHeight());
-        })
-        $('pre').each(function (i, e) {
-            hljs.highlightBlock(e);
         })
