@@ -8,6 +8,7 @@ html
             script(src="http://code.jquery.com/jquery-1.9.1.min.js")
             script(src="/bootstrap/js/bootstrap.min.js")
             script(src="/google-code-prettify/prettify.js")
+            script(src="/google-code-prettify/lang-scss.js")
         block css
             link(href="/google-code-prettify/prettify.css", rel="stylesheet",  type="text/css")
             link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
@@ -20,7 +21,7 @@ html
             
             div.row-fluid
                 div.span3.sidebar-container
-                    div.sidebar(data-spy='affix')
+                    div.sidebar(data-spy='affix', data-offset-top='64')
                         block sidebar
 
                 div.span9.content
