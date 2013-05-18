@@ -29,22 +29,18 @@ block append content
                 if block.getMarkup()
                     iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div>")
                     h2 HTML
-                    pre.prettyprint
-                        code(class="html")= block.getMarkup()
+                    pre.prettyprint.lang-html.linenums= block.getMarkup()
 
                 if block.getTag('import')
                     h2 Imports
-                    pre.prettyprint
-                        code(class="html")= block.getTagValue('import')
+                    pre.prettyprint.lang-css.linenums= block.getTagValue('import')
 
                 if block.getTag('extends')
                     h2 Extends
-                    pre.prettyprint
-                        code(class="html")= block.getTagValue('extends')
+                    pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
 
                 h2 Sass
-                pre.prettyprint
-                    code(class="scss")= block.getSass()
+                pre.prettyprint.lang-scss.linenums= block.getSass()
 
 block append footer
     script(type="text/javascript")

@@ -6,8 +6,8 @@ html
             meta(name='viewport', content='width=device-width, initial-scale=1.0')
         block js
             script(src="http://code.jquery.com/jquery-1.9.1.min.js")
-            script(src="/google-code-prettify/run_prettify.js")
             script(src="/bootstrap/js/bootstrap.min.js")
+            script(src="/google-code-prettify/prettify.js")
         block css
             link(href="/google-code-prettify/prettify.css", rel="stylesheet",  type="text/css")
             link(rel="stylesheet", type="text/css", href="/bootstrap/css/bootstrap.min.css")
@@ -37,4 +37,5 @@ html
 
                         $(document).ready(function () {
                             affixWidth();
+                            window.prettyPrint && prettyPrint()
                         });

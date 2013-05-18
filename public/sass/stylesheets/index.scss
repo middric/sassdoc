@@ -100,11 +100,8 @@ h3 {
  * <pre>Lorem ipsum dolor sit amet.</pre>
  */
 pre {
-    background: #f8f8ff;
     border-radius: 0;
-    &, code {
-        font-family: 'Source Code Pro', monospace;
-        font-size: 14px;
-        line-height: 2;
-    }
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    line-height: 2;
 }
