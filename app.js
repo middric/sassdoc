@@ -11,6 +11,9 @@ app.use(sass.middleware({
 	debug: true,
 	outputStyle: 'compressed'
 }));
+app.set('views', __dirname + '/views');
+app.engine('.html', require('jade').__express);
+app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -26,6 +29,4 @@ if ('development' == app.get('env')) {
 app.set('configuration', require('./config/bootstrap.js')(process.argv, app));
 require('./config/server.js')(app);
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
 require('./config/routes.js')(app);
