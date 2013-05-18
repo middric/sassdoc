@@ -1,14 +1,11 @@
 extends layout
 
 block append header
-    div.navbar
-        div.navbar-inner
-            a.brand(href="#") SassDoc
-            ul.nav
-                each package in packages
-                    - var activeClass = ((currentPackage.url == package.url) ? 'active' : '')
-                    li(class=activeClass)
-                        a(href="/packages/#{package.url}")= package.name
+    ul
+        each package in packages
+            - var activeClass = ((currentPackage.url == package.url) ? 'active' : '')
+            li(class=activeClass)
+                a(href="/packages/#{package.url}")= package.name
 
 block append sidebar
     h1 Components

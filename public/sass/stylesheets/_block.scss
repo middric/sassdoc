@@ -1,5 +1,7 @@
 @mixin block {
     @include box;
-    padding: 0px 20px 20px;
     margin-bottom: 40px;
+    .span12 {
+        padding: 0px 20px;
+    }
 }
