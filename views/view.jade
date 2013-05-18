@@ -29,21 +29,21 @@ block append content
                 if block.getMarkup()
                     iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div>")
                     h2 HTML
-                    pre
+                    pre.prettyprint
                         code(class="html")= block.getMarkup()
 
                 if block.getTag('import')
                     h2 Imports
-                    pre
+                    pre.prettyprint
                         code(class="html")= block.getTagValue('import')
 
                 if block.getTag('extends')
                     h2 Extends
-                    pre
+                    pre.prettyprint
                         code(class="html")= block.getTagValue('extends')
 
                 h2 Sass
-                pre
+                pre.prettyprint
                     code(class="scss")= block.getSass()
 
 block append footer
