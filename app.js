@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(sass.middleware({
 	src: __dirname + '/public/sass',
 	dest: __dirname + '/public',
-	debug: true,
+	debug: false,
 	outputStyle: 'compressed'
 }));
 app.set('views', __dirname + '/views');
