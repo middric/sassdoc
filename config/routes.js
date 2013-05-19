@@ -11,7 +11,7 @@ module.exports = function (app) {
 		files = Files.readFiles();
 
 		for (file in files) {
-			blocks = blocks.concat(Block.getBlocks(files[file].output, app));
+			blocks = blocks.concat(Block.getBlocks(files[file], app));
 		}
 		for (i = blocks.length - 1; i >= 0; i--) {
 			blocks[i].parse();

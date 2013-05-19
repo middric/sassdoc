@@ -1,7 +1,7 @@
 var Tag = require('../models/Tag.js'),
 	Sass = require('../models/Sass.js'),
 	_ = require('underscore'),
-	Block = function (line, app) {
+	Block = function (line, app, file) {
 	var lines = [],
 		tags = {}, markup = [], sass = [], css = '';
 
@@ -60,6 +60,10 @@ var Tag = require('../models/Tag.js'),
 
 			if (config.useCompass) {
 				imports.push("@import \"compass\";");
+			}
+
+			if (file.filename) {
+				imports.push("@import \"" + file.filename + "\";");
 			}
 
 			for (var include in config.imports) {
@@ -155,15 +159,15 @@ Block.getPackages = function (blocks) {
 	return packages;
 };
 
-Block.getBlocks = function (input, app) {
-	var lines = input.split("\n"), line = '',
+Block.getBlocks = function (file, app) {
+	var lines = file.output.split("\n"), line = '',
 		blocks = [],
 		currentBlock = null,
 		openCount = 0, closeCount = 0;
 
 	while ((line = lines.shift()) !== undefined) {
 		if (line.match(/^\/\*\*/)) {
-			blocks.push(new Block(line, app));
+			blocks.push(new Block(line, app, file));
 			currentBlock = blocks.length - 1;
 			openCount = 0, closeCount = 0;
 			continue;
