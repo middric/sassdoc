@@ -58,6 +58,10 @@ var Tag = require('../models/Tag.js'),
 				importStatements = this.getTag('import'),
 				imports = [];
 
+			if (config.useCompass) {
+				imports.push("@import \"compass\";");
+			}
+
 			for (var include in config.imports) {
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
