@@ -21,6 +21,7 @@ block append content
             div.span12
                 h1
                     a(name=block.getID())= block.getTagValue('name')
+                    a.only(href="/packages/#{currentPackage.url}/#{block.getID()}") Open in new window
 
                 if block.getTagValue('description')
                     div(class="description")!= block.getTagValue('description')

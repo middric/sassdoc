@@ -33,4 +33,8 @@ module.exports = function (app) {
 	app.get('/packages/:package', function (req, res) {
 		res.render('view', packageRoute(req.params.package));
 	});
+
+	app.get('/packages/:package/:block', function (req, res) {
+		res.render('view', packageRoute('global'));
+	});
 }
