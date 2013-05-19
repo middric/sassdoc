@@ -21,7 +21,10 @@ block append content
             div.span12
                 h1
                     a(name=block.getID())= block.getTagValue('name')
-                    a.only(href="/packages/#{currentPackage.url}/#{block.getID()}") Open in new window
+                    if !only
+                        a.only(href="/packages/#{currentPackage.url}/#{block.getID()}") View detail
+                    else
+                        a.only(href="/packages/#{currentPackage.url}") Back to package
 
                 if block.getTagValue('description')
                     div(class="description")!= block.getTagValue('description')
@@ -31,16 +34,17 @@ block append content
                     h2 HTML
                     pre.prettyprint.lang-html.linenums= block.getMarkup()
 
-                if block.getTag('import')
-                    h2 Imports
-                    pre.prettyprint.lang-css.linenums= block.getTagValue('import')
+                if only
+                    if block.getTag('import')
+                        h2 Imports
+                        pre.prettyprint.lang-css.linenums= block.getTagValue('import')
 
-                if block.getTag('extends')
-                    h2 Extends
-                    pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
+                    if block.getTag('extends')
+                        h2 Extends
+                        pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
 
-                h2 Sass
-                pre.prettyprint.lang-scss.linenums= block.getSass()
+                    h2 Sass
+                    pre.prettyprint.lang-scss.linenums= block.getSass()
 
 block append js
     script

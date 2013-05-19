@@ -32,7 +32,8 @@ module.exports = function (app) {
 		return {
 			currentPackage: packages[requestedPackage],
 			packages: packages,
-			blocks: blocks
+			blocks: blocks,
+			only: requestedBlock
 		};
 	};
 
