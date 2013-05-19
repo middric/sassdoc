@@ -22,7 +22,8 @@ block append content
                 h1
                     a(name=block.getID())= block.getTagValue('name')
 
-                div(class="description")!= block.getTagValue('description')
+                if block.getTagValue('description')
+                    div(class="description")!= block.getTagValue('description')
 
                 if block.getMarkup()
                     iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")
