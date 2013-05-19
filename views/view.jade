@@ -25,7 +25,7 @@ block append content
                 div(class="description")!= block.getTagValue('description')
 
                 if block.getMarkup()
-                    iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div>")
+                    iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")
                     h2 HTML
                     pre.prettyprint.lang-html.linenums= block.getMarkup()
 
@@ -40,15 +40,15 @@ block append content
                 h2 Sass
                 pre.prettyprint.lang-scss.linenums= block.getSass()
 
-block append footer
-    script(type="text/javascript")
-        $('iframe').load(function () {
-            var iframe = $(this),
-                srcdoc = iframe.attr('srcdoc');
+block append js
+    script
+        function iframeLoaded(el) {
+            var el = $(el),
+                srcdoc = el.attr('srcdoc');
 
             // No srcdoc support
-            if (!iframe.contents().find('#markup').length) {
-                iframe.css('border', 0).contents().find('body').empty().html(srcdoc);
+            if (!el.contents().find('#markup').length) {
+                el.contents().find('body').empty().html(srcdoc);
             }
-            iframe.height($('#markup', iframe.contents()).outerHeight());
-        })
+            el.height($('#markup', el.contents()).outerHeight());
+        }
