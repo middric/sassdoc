@@ -70,6 +70,12 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getCSS: function () {
+			if (!css && _.size(tags)) {
+				toParse = this.getImports();
+				toParse += sass.join("\n");
+				toParse += this.getTagValue('usage');
+				css = Sass.parse(toParse);
+			}
 			return css;
 		},
 
@@ -112,13 +118,6 @@ var Tag = require('../models/Tag.js'),
 				if (_.size(tags) && Sass.isValid(lines[i])) {
 					sass.push(lines[i]);
 				}
-			}
-
-			if (_.size(tags)) {
-				toParse = this.getImports();
-				toParse += sass.join("\n");
-				toParse += this.getTagValue('usage');
-				css = Sass.parse(toParse);
 			}
 		}
 	};
