@@ -1,5 +1,5 @@
 module.exports = function (app) {
-	var packageRoute = function (requestedPackage) {
+	var packageRoute = function (requestedPackage, requestedBlock) {
 		var sassDirectory = app.get('configuration'),
 			Files = require('../models/Files.js'),
 			Block = require('../models/Block.js'),
@@ -18,11 +18,21 @@ module.exports = function (app) {
 		}
 		blocks = Block.sort(blocks);
 		packages = Block.getPackages(blocks);
+		blocks = packages[requestedPackage].blocks;
+
+		if (requestedBlock) {
+			for (var i = blocks.length - 1; i >= 0; i--) {
+				if (blocks[i].getID() == requestedBlock) {
+					blocks = [blocks[i]];
+					break;
+				}
+			}
+		}
 
 		return {
 			currentPackage: packages[requestedPackage],
 			packages: packages,
-			blocks: packages[requestedPackage].blocks
+			blocks: blocks
 		};
 	};
 
@@ -35,6 +45,6 @@ module.exports = function (app) {
 	});
 
 	app.get('/packages/:package/:block', function (req, res) {
-		res.render('view', packageRoute('global'));
+		res.render('view', packageRoute(req.params.package, req.params.block));
 	});
 }
