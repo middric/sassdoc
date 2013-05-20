@@ -54,6 +54,15 @@ block append content
                             h2 Extends
                             pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
 
+                        if block.getTag('argument')
+                            h2 Arguments
+                            table
+                                each tag in block.getTag('argument')
+                                    tr
+                                        td
+                                            code= tag.getValue().replace(/(\$[^\s]+).*/, '$1')
+                                        td= tag.getValue().replace(/\$[^\s]+(.*)/, '$1')
+
                         h2 Sass
                         pre.prettyprint.lang-scss.linenums= block.getSass()
 
