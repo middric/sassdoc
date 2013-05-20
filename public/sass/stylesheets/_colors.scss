@@ -6,12 +6,6 @@ $pale-squid: #ccc;
 
 /**
  * @package Colors
- * @import stylesheets/colors
  * @variable
  */
 $border-color: $pale-squid;
-
-@mixin box {    
-    background: #fff;
-    box-shadow: 0 5px 1px rgba(0,0,0,.1);
-}

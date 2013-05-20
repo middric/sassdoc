@@ -1,0 +1,86 @@
+/**
+ * @package Typography
+ * @name Anchor styling
+ * 
+ * <a href="">A link</a>
+ */
+a {
+    color: #333;
+    padding: 0.5ex 1ex;
+    margin: -0.5ex -1ex;
+    &:hover {
+        background: #333;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+/**
+ * @package Typography
+ * @name Heading 1
+ *
+ * <h1>Heading 1</h1>
+ */
+h1 {
+    font-size: 18px;
+}
+
+/**
+ * @package Typography
+ * @name Heading 2
+ *
+ * <h2>Heading 2</h2>
+ */
+h2 {
+    line-height: 1.2;
+    font-size: 16px;
+}
+
+/**
+ * @package Typography
+ * @name Description paragraph
+ *
+ * <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+ * Cras pellentesque, lacus a feugiat mollis, risus urna sollicitudin sem, at mollis justo turpis non metus. 
+ * Praesent at quam et sem lobortis pretium. Donec ac pulvinar justo. Morbi semper, velit posuere faucibus hendrerit, 
+ * mi ligula imperdiet enim, ac sodales magna dui non justo.</p>
+ */
+.description {
+    display: block;
+    margin-bottom: 2em;
+}
+
+/**
+ * @package Typography
+ * @name View detail link
+ *
+ * <a class="only" href="">View detail</a>
+ */
+.only {
+    float: right;
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    margin: 0;
+    padding: 0;
+    &:hover {
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        color: #666;
+        text-decoration: underline;
+    }
+}
+
+/**
+ * @package Typography
+ * @name Code styling
+ * @description Negates some of the styling applied by Twitter Bootstrap
+ * <pre>Lorem ipsum dolor sit amet.</pre>
+ */
+pre {
+    border-radius: 0;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    line-height: 2;
+}
