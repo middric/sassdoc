@@ -15,6 +15,18 @@ a {
     }
 }
 
+.footer {
+    color: #999;
+    a {
+        color: #999;
+        text-decoration: underline;
+        &:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+
 /**
  * @package Typography
  * @name Heading 1
