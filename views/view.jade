@@ -41,20 +41,15 @@ block append content
                         div(class="description")!= block.getTagValue('description')
 
                     if block.getMarkup()
+                        hr
                         iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")
+                        hr
                         h2 HTML
                         pre.prettyprint.lang-html.linenums= block.getMarkup()
 
                     if only
-                        if block.getTag('import')
-                            h2 Imports
-                            pre.prettyprint.lang-css.linenums= block.getTagValue('import')
-
-                        if block.getTag('extends')
-                            h2 Extends
-                            pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
-
                         if block.getTag('argument')
+                            hr
                             h2 Arguments
                             table
                                 each tag in block.getTag('argument')
@@ -63,8 +58,19 @@ block append content
                                             code= tag.getValue().replace(/(\$[^\s]+).*/, '$1')
                                         td= tag.getValue().replace(/\$[^\s]+(.*)/, '$1')
 
+                        hr
                         h2 Sass
                         pre.prettyprint.lang-scss.linenums= block.getSass()
+
+                        if block.getTag('import')
+                            hr
+                            h2 Imports
+                            pre.prettyprint.lang-css.linenums= block.getTagValue('import')
+
+                        if block.getTag('extends')
+                            hr
+                            h2 Extends
+                            pre.prettyprint.lang-html.linenums= block.getTagValue('extends')
 
 block append js
     script
