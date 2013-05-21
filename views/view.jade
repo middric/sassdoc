@@ -58,6 +58,11 @@ block append content
                                             code= tag.getValue().replace(/(\$[^\s]+).*/, '$1')
                                         td= tag.getValue().replace(/\$[^\s]+(.*)/, '$1')
 
+                        if block.getTag('return')
+                            hr
+                            h2 Returns
+                            p= block.getTagValue('return')
+
                         hr
                         h2 Sass
                         pre.prettyprint.lang-scss.linenums= block.getSass()
