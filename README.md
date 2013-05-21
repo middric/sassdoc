@@ -3,16 +3,16 @@ SassDoc
 
 ## Installation
 SassDoc is reliant on node, npm, sass and compass
-
-    git clone https://github.com/middric/sassdoc.git
-    cd sassdoc
-    npm install
-    
+```bash
+$ git clone https://github.com/middric/sassdoc.git
+$ cd sassdoc
+$ npm install
+```
 ## Usage
 Start SassDoc by running app.js and passing in your configuration JSON:
-
-    node app demoConfig.json
-    
+```bash
+$ node app demoConfig.json
+```    
 ## Configuration parameters
 
 **sassDirectory**  
@@ -29,29 +29,57 @@ Start SassDoc by running app.js and passing in your configuration JSON:
 
 ## Documentation tags
 
-**@variable**  
+```sass
+@variable
+```
 Tag defines if this block refers to a variable
-
-**@component**  
+***
+```sass
+@component  
+```
 Defines if this block refers to a component (default assumption)
-
-**@package**  
+***
+```sass
+@package My package name
+```
 The package that this block belongs to
-
-**@name**  
+***
+```sass
+@name Block name
+```
 The name of the block
-
-**@description**  
+***
+```sass
+@description A description. <strong>I can contain HTML</strong>
+```
 A description of the block
-
-**@usage**  
+***
+```sass
+@usage .my-class { @include block-mixin }
+```
 Any additional Sass/CSS required to display this block in the documentation. For example if documenting a mixin usage might include Sass which implements the mixin on an element defined by markup.
-
-**@import**  
+***
+```sass
+@import components/thingstoimport
+```
 Any additional Sass files required by the block
-
-**@extends**  
+***
+```sass
+@extends %extend-me 
+```
 The mixins/variables this block extends
-
-**@markup**  
+***
+```sass
+@argument $myArg Argument description
+```
+An argument accepted this block. Useful for documenting mixins and functions.
+***
+```sass
+@return An integer
+```
+A description of the output of a function.
+***
+```sass
+@markup <div class="my-class"></div>
+```
 Some example HTML markup of the Sass in use. The tag is _NOT_ required, any text not preceded by a tag is assumed to be markup
