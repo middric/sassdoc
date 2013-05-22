@@ -21,7 +21,7 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getID: function () {
-			return this.getTagValue('name').replace(/[^\w]/g, '_');
+			return this.getTagValue('name').replace(/[^\w]/g, '_').toLowerCase();
 		},
 
 		getTag: function (name) {
@@ -62,10 +62,6 @@ var Tag = require('../models/Tag.js'),
 				imports.push("@import \"compass\";");
 			}
 
-			if (file.filename) {
-				imports.push("@import \"" + file.filename + "\";");
-			}
-
 			for (var include in config.imports) {
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
@@ -84,6 +80,8 @@ var Tag = require('../models/Tag.js'),
 				toParse += this.getTagValue('usage');
 				css = Sass.parse(toParse);
 			}
+			// Remove comments
+			css = css.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
 			return css;
 		},
 
