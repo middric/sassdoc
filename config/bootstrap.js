@@ -2,6 +2,10 @@ var fs = require('fs'),
 	e = require('../config/exceptions.js');
 
 module.exports = function (args, app) {
+	if (args.length < 3) {
+		throw new e.NotEnoughArgs();
+	}
+	
 	if (!fs.existsSync(args[2])) {
 		throw new e.FileDoesNotExist();
 	}
