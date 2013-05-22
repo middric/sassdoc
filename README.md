@@ -1,6 +1,5 @@
-SassDoc
+SassDoc - v0.1 [![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
 ==========
-[![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
 
 ## Installation
 SassDoc is reliant on node, npm, sass and compass
