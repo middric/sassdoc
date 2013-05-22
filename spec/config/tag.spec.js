@@ -1,4 +1,4 @@
-var Tag = require('../../models/tag.js'),
+var Tag = require('../../models/Tag.js'),
 	e = require('../../config/exceptions.js');
 
 describe('Tag', function () {
