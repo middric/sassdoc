@@ -1,15 +1,15 @@
-SassDoc - v0.1 [![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
+Sassdoc - v0.1 [![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
 ==========
 
 ## Installation
-SassDoc is reliant on node, npm, sass and compass
+Sassdoc is reliant on node, npm, sass and compass
 ```bash
 $ git clone https://github.com/middric/sassdoc.git
 $ cd sassdoc
 $ npm install
 ```
 ## Usage
-Start SassDoc by running app.js and passing in your configuration JSON:
+Start Sassdoc by running app.js and passing in your configuration JSON:
 ```bash
 $ node app demoConfig.json
 ```    
