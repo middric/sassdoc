@@ -121,7 +121,6 @@ describe('Block', function () {
 		blocks[0].parse();
 
 		expect(blocks[0].getImports()).toBe("@import \"compass\";\n" +
-			"@import \"spec/fixtures/sass/styles.scss\";\n" +
 			"@import \"/sass/globalImport\";\n" + 
 			"@import \"/sass/anotherfile\";");
 	});
@@ -156,7 +155,7 @@ describe('Block', function () {
 		expect(blocks[1].getCSS()).toBe(
 			".anothertest body {\n" +
 			"  background: red;\n" +
-			"}"
+			"}\n"
 		);
 	});
 });

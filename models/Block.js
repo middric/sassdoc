@@ -62,10 +62,6 @@ var Tag = require('../models/Tag.js'),
 				imports.push("@import \"compass\";");
 			}
 
-			if (file.filename) {
-				imports.push("@import \"" + file.filename + "\";");
-			}
-
 			for (var include in config.imports) {
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
@@ -84,9 +80,8 @@ var Tag = require('../models/Tag.js'),
 				toParse += this.getTagValue('usage');
 				css = Sass.parse(toParse);
 			}
-			css = css.replace(/^\s*\/\/.*$/gi, '');
-			css = css.replace(/\/\*.*(\*\/)?/gi, '');
-			// TODO : sass multi line block comments need to be stripped out before returning
+			// Remove comments
+			css = css.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
 			return css;
 		},
 
