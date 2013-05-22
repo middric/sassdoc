@@ -78,7 +78,7 @@ var Tag = require('../models/Tag.js'),
 				toParse = this.getImports();
 				toParse += sass.join("\n");
 				toParse += this.getTagValue('usage');
-				css = Sass.parse(toParse);
+				css = Sass.parse(toParse, app);
 			}
 			// Remove comments
 			css = css.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');

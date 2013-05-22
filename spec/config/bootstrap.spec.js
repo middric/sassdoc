@@ -28,4 +28,11 @@ describe('Bootstrap', function () {
 
 		expect(Bootstrap([1, 2, configFile], app).sassDirectory).toEqual('../../public/sass');
 	});
+
+	it("should accept a compass configuration", function () {
+		var configFile = 'spec/fixtures/config.json',
+			app = require('express')();
+
+		expect(Bootstrap([1, 2, configFile], app).useCompass).toBe(true);
+	})
 });

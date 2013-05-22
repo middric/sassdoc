@@ -3,14 +3,14 @@ var execSync = require('execSync'),
 	sassCommand = 'sass',
 	sassSyntax = 'scss',
 	sassStyle = 'expanded',
-	useCompass = true,
 	Sass = function () {};
 
-Sass.parse = function (input) {
+Sass.parse = function (input, app) {
 	var cmd = sassCommand + ' -s -t ' + sassStyle + ' --' + sassSyntax,
+		config = app.get('configuration'),
 		output;
 
-	if (useCompass) {
+	if (config.useCompass) {
 		cmd += ' --compass';
 	}
 	output = execSync.exec("echo '" + input + "' | " + cmd);
