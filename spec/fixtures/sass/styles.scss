@@ -1,5 +1,8 @@
 /**
- * @component Body styling
+ * @component
+ * @name Test
+ * @import anotherfile
+ * @external anothercss
  * <body>
  *     The body
  * </body>
@@ -10,3 +13,22 @@
 		background: $color;
 	}
 }
+
+/**
+ * @component
+ * @name Test
+ * <body>
+ *     The body
+ * </body>
+ */
+.anothertest {
+	$color: red;
+	body {
+		background: $color;
+	}
+}
+
+/**
+ * @variable
+ */
+$color: red;

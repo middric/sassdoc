@@ -21,7 +21,7 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getID: function () {
-			return this.getTagValue('name').replace(/[^\w]/g, '_');
+			return this.getTagValue('name').replace(/[^\w]/g, '_').toLowerCase();
 		},
 
 		getTag: function (name) {
@@ -84,6 +84,9 @@ var Tag = require('../models/Tag.js'),
 				toParse += this.getTagValue('usage');
 				css = Sass.parse(toParse);
 			}
+			css = css.replace(/^\s*\/\/.*$/gi, '');
+			css = css.replace(/\/\*.*(\*\/)?/gi, '');
+			// TODO : sass multi line block comments need to be stripped out before returning
 			return css;
 		},
 
