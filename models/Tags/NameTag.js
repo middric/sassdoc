@@ -5,7 +5,7 @@ var NameTag = function (k, v) {
 	NameTag.super_.call(this, k, v, 'name');
 
 	this.getID = function () {
-		return this.getValue().replace(/[^\w]/g, '_').toLowerCase();
+		return this.getValue().trim().replace(/[^\w]/g, '_').toLowerCase();
 	};
 };
 util.inherits(NameTag, AbstractTag);

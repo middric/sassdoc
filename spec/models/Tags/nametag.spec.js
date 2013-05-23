@@ -21,4 +21,11 @@ describe('Name tag model', function () {
 		expect(tag.getName()).toBe('name');
 		expect(tag.getValue()).toBe('value');
 	});
+
+	it("should return an ID", function () {
+		var tag = new NameTag('name', '  My very long name  '),
+			expected = 'my_very_long_name';
+
+		expect(tag.getID()).toBe(expected);
+	});
 });
