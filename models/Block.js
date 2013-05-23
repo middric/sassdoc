@@ -74,7 +74,7 @@ var Tag = require('../models/Tag.js'),
 			}
 
 			if (importTag) {
-				imports.push(importTag.getImportStatements(config.root + '/' + config.sassDirectory));
+				imports = imports.concat(importTag.getImportStatements(config.root + '/' + config.sassDirectory));
 			}
 
 			return imports.join("\n");

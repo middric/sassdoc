@@ -10,10 +10,10 @@ var ImportTag = function (k, v) {
 		var statements = [];
 
 		for (var i = this.value.length - 1; i >= 0; i--) {
-			statements.push("@import \"" + root + '/' + this.value[i] + "\";");
+			statements.unshift("@import \"" + root + '/' + this.value[i] + "\";");
 		}
 
-		return statements.join('');
+		return statements;
 	};
 };
 
