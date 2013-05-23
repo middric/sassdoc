@@ -40,6 +40,10 @@ var Tag = require('../models/Tag.js'),
 			return 'Component';
 		},
 
+		getTags: function () {
+			return tags;
+		},
+
 		getTag: function (name) {
 			if (!tags[name]) {
 				return;
