@@ -22,14 +22,11 @@ Tag.isMarkup = function (input) {
 	return matches[1];
 };
 
-Tag.getTag = function (input) {
+Tag.getTag = function (key, value) {
 	var tagModel;
 	try {
-		if (parts = Tag.isValid(input)) {
-			tagModel = require('./Tags/' + parts[0] + 'Tag');
-			obj = new tagModel(parts[0], parts[1]);
-			return new tagModel(parts[0], parts[1]);
-		}
+		tagModel = require('./Tags/' + key + 'Tag');
+		return new tagModel(key, value);
 	} catch (e) {}
 
 	throw new e.InvalidTag();

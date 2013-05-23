@@ -21,7 +21,7 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getID: function () {
-			return this.getTagValue('name').replace(/[^\w]/g, '_').toLowerCase();
+			return this.getTag('name').getID();
 		},
 
 		getTag: function (name) {
@@ -30,19 +30,6 @@ var Tag = require('../models/Tag.js'),
 			}
 
 			return tags[name];
-		},
-
-		getTagValue: function (name) {
-			var tag = this.getTag(name),
-				value = [];
-
-			if (tag) {
-				for (var i = tag.length - 1; i >= 0; i--) {
-					value.unshift(tag[i].getValue());
-				}
-			}
-
-			return value.join("\n");
 		},
 
 		getMarkup: function () {
@@ -55,7 +42,7 @@ var Tag = require('../models/Tag.js'),
 
 		getImports: function () {
 			var config = app.get('configuration'),
-				importStatements = this.getTag('import'),
+				importTag = (this.getTag('import')) ? this.getTag('import').getValue() : [],
 				imports = [];
 
 			if (config.useCompass) {
@@ -66,19 +53,20 @@ var Tag = require('../models/Tag.js'),
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
 
-			for (var i in importStatements) {
-				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + importStatements[i].getValue() + "\";");
+			for (var i in importTag) {
+				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + importTag[i] + "\";");
 			}
 
 			return imports.join("\n");
 		},
 
 		getCSS: function () {
+			var toParse;
 			if (!css && _.size(tags)) {
 				try {
 					toParse = this.getImports();
 					toParse += sass.join("\n");
-					toParse += this.getTagValue('usage');
+					toParse += (this.getTag('usage')) ? this.getTag('usage').getValue() : '';
 					css = Sass.parse(toParse, app);
 				} catch (e) {
 					return e;
@@ -91,13 +79,13 @@ var Tag = require('../models/Tag.js'),
 
 		getExternal: function () {
 			var config = app.get('configuration'),
-				externals = this.getTag('external'),
+				externalTag = (this.getTag('external')) ? this.getTag('external').getValue() : null,
 				linkTag = '<link href="%s" rel="stylesheet" />',
 				markup = [];
 
-			if (externals) {
-				for (var i = externals.length - 1; i >= 0; i--) {
-					markup.unshift(linkTag.replace('%s', externals[i].getValue()));
+			if (externalTag) {
+				for (var i = externalTag.length - 1; i >= 0; i--) {
+					markup.unshift(linkTag.replace('%s', externalTag[i]));
 				}
 			}
 
@@ -107,24 +95,25 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		parse: function () {
-			var line, i = 0, tagName, toParse;
+			var parts, i = 0, tagName, toParse;
 			for (; i < lines.length; i++) {
 				try {
-					if (line = Tag.getTag(lines[i])) {
-						tagName = line.getName();
+					if (parts = Tag.isValid(lines[i])) {
+						tagName = parts[0];
 						if (!tags[tagName]) {
-							tags[tagName] = [];
+							tags[tagName] = Tag.getTag(parts[0], parts[1]);
+						} else {
+							tags[tagName].addValue(parts[1]);
 						}
-						tags[tagName].push(line);
-						if (line.isVariable()) {
+						if (tags[tagName].isVariable()) {
 							this.isVariable = true;
 						}
 						continue;
 					}
 				} catch (e) {};
 
-				if (line = Tag.isMarkup(lines[i])) {
-					markup.push(line);
+				if (parts = Tag.isMarkup(lines[i])) {
+					markup.push(parts);
 					continue;
 				}
 				if (_.size(tags) && Sass.isValid(lines[i])) {

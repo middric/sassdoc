@@ -20,8 +20,7 @@ describe('Tag', function () {
 	});
 
 	it("should create the correct tag object", function () {
-		var line = ' * @name Value',
-			tag = Tag.getTag(line);
+		var tag = Tag.getTag('name', 'value');
 		expect(tag.name).toBe('name');
 	});
 

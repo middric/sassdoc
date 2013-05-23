@@ -62,12 +62,12 @@ describe('Block', function () {
 	});
 
 	it("should be able to retrieve a tag", function () {
-		expect((blocks[0].getTag('name'))[0].getName()).toBe('name');
-		expect((blocks[0].getTag('name'))[0].getValue()).toBe('Test');
+		expect(blocks[0].getTag('name').getName()).toBe('name');
+		expect(blocks[0].getTag('name').getValue()).toBe('Test');
 	});
 
 	it("should be able to retrieve a tag value", function () {
-		expect(blocks[0].getTagValue('name')).toBe('Test');
+		expect(blocks[0].getTag('name').getValue()).toBe('Test');
 	});
 
 	it("should list the imports", function () {
