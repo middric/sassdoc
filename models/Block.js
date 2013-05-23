@@ -21,7 +21,23 @@ var Tag = require('../models/Tag.js'),
 		},
 
 		getID: function () {
-			return this.getTag('name').getID();
+			if (this.getTag('name')) {
+				return this.getTag('name').getID();
+			}
+
+			return '';
+		},
+
+		getName: function () {
+			if (this.getTag('name')) {
+				return this.getTag('name').getValue()
+			}
+
+			if (this.isVariable) {
+				return 'Variable';
+			}
+
+			return 'Component';
 		},
 
 		getTag: function (name) {
@@ -110,7 +126,7 @@ var Tag = require('../models/Tag.js'),
 						}
 						continue;
 					}
-				} catch (e) {};
+				} catch (e) {}
 
 				if (parts = Tag.isMarkup(lines[i])) {
 					markup.push(parts);
@@ -132,12 +148,13 @@ Block.getPackages = function (blocks) {
 	for (; i >= 0; i--) {
 		blockPackages = blocks[i].getTag('package');
 		if (blockPackages) {
+			blockPackages = blockPackages.getValue();
 			for (j in blockPackages) {
-				key = blockPackages[j].getValue().replace(/[^\w]/g, '_').toLowerCase();
+				key = blockPackages[j].replace(/[^\w]/g, '_').toLowerCase();
 				if (!packages[key]) {
 					packages[key] = {
 						url: key,
-						name: blockPackages[j].getValue(),
+						name: blockPackages[j],
 						blocks: [blocks[i]]
 					};
 				} else {

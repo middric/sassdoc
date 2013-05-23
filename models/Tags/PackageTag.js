@@ -3,6 +3,9 @@ var util = require('util'),
 
 var PackageTag = function (k, v) {
 	PackageTag.super_.call(this, k, v, 'package');
+	this.getValue = function () {
+		return this.value;
+	};
 };
 util.inherits(PackageTag, AbstractTag);
 PackageTag.prototype.name = 'PackageTag';

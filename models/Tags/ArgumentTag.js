@@ -3,6 +3,9 @@ var util = require('util'),
 
 var ArgumentTag = function (k, v) {
 	ArgumentTag.super_.call(this, k, v, 'argument');
+	this.getValue = function () {
+		return this.value;
+	};
 };
 util.inherits(ArgumentTag, AbstractTag);
 ArgumentTag.prototype.name = 'ArgumentTag';
