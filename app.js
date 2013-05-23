@@ -27,6 +27,9 @@ if ('development' == app.get('env')) {
 }
 
 app.set('configuration', require('./config/bootstrap.js')(process.argv, app));
+if (app.get('configuration').debug) {
+	process.env.debug = true;
+}
 require('./config/server.js')(app);
 
 require('./config/routes.js')(app);

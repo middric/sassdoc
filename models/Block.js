@@ -89,6 +89,9 @@ var Tag = require('../models/Tag.js'),
 					toParse += (this.getTag('usage')) ? this.getTag('usage').getValue() : '';
 					css = Sass.parse(toParse, app);
 				} catch (e) {
+					if (!!process.env.debug) {
+						throw e;
+					}
 					return e;
 				}
 			}
@@ -130,7 +133,11 @@ var Tag = require('../models/Tag.js'),
 						}
 						continue;
 					}
-				} catch (e) {}
+				} catch (e) {
+					if (!!process.env.debug) {
+						throw e;
+					}
+				}
 
 				if (parts = Tag.isMarkup(lines[i])) {
 					markup.push(parts);

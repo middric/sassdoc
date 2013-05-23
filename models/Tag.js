@@ -8,7 +8,7 @@ Tag.isValid = function (input) {
 	if (!matches) {
 		return false;
 	}
- 
+
 	return [matches[1].trim(), matches[2].trim()];
 };
 
@@ -27,7 +27,11 @@ Tag.getTag = function (key, value) {
 	try {
 		tagModel = require('./Tags/' + key + 'Tag');
 		return new tagModel(key, value);
-	} catch (e) {}
+	} catch (e) {
+		if (!!process.env.debug) {
+			throw e;
+		}
+	}
 
 	throw new e.InvalidTag();
 };
