@@ -78,7 +78,7 @@ block append content
                     if tags['import']
                         hr
                         h2 Imports
-                        pre.prettyprint.lang-css.linenums= tags['import'].getValue()
+                        pre.prettyprint.lang-css.linenums= tags['import'].getValue().join("\n")
 
                     if tags['extend']
                         hr
