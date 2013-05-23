@@ -1,4 +1,4 @@
-Sassdoc - v0.1 [![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
+Sassdoc - v0.2 [![Build Status](https://travis-ci.org/middric/sassdoc.png)](https://travis-ci.org/middric/sassdoc)
 ==========
 
 ## Installation
