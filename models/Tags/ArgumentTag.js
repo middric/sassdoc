@@ -6,23 +6,17 @@ var ArgumentTag = function (k, v) {
 	this.getValue = function () {
 		return this.value;
 	};
-	this.getVariables = function () {
-		var vars = [];
+	this.getArguments = function () {
+		var args = [];
 
 		for (var i = this.value.length - 1; i >= 0; i--) {
-			vars.unshift(this.value[i].replace(/(\$[^\s]+).*/, '$1'));
+			args.unshift({
+				variable: this.value[i].replace(/(\$[^\s]+).*/, '$1'),
+				description: this.value[i].replace(/\$[^\s]+(.*)/, '$1')
+			});
 		}
 
-		return vars;
-	};
-	this.getDescriptions = function () {
-		var descriptions = [];
-
-		for (var i = this.value.length - 1; i >= 0; i--) {
-			descriptions.unshift(this.value[i].replace(/\$[^\s]+(.*)/, '$1'));
-		}
-
-		return descriptions;
+		return args;
 	};
 };
 util.inherits(ArgumentTag, AbstractTag);
