@@ -7,12 +7,13 @@ var ArgumentTag = function (k, v) {
 		return this.value;
 	};
 	this.getArguments = function () {
-		var args = [];
+		var args = [], matches;
 
 		for (var i = this.value.length - 1; i >= 0; i--) {
+			matches = this.value[i].match(/(\$[^\s]+)(.*)/);
 			args.unshift({
-				variable: this.value[i].replace(/(\$[^\s]+).*/, '$1'),
-				description: this.value[i].replace(/\$[^\s]+(.*)/, '$1')
+				variable: matches[1].trim(),
+				description: matches[2].trim()
 			});
 		}
 
