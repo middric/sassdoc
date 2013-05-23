@@ -75,10 +75,14 @@ var Tag = require('../models/Tag.js'),
 
 		getCSS: function () {
 			if (!css && _.size(tags)) {
-				toParse = this.getImports();
-				toParse += sass.join("\n");
-				toParse += this.getTagValue('usage');
-				css = Sass.parse(toParse, app);
+				try {
+					toParse = this.getImports();
+					toParse += sass.join("\n");
+					toParse += this.getTagValue('usage');
+					css = Sass.parse(toParse, app);
+				} catch (e) {
+					return e;
+				}
 			}
 			// Remove comments
 			css = css.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
