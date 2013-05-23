@@ -59,12 +59,14 @@ block append content
                         hr
                         h2 Arguments
                         table
-                            - values = tags['argument'].getValue()
-                            each i in values
+                            - variables = tags['argument'].getVariables()
+                            - descriptions = tags['argument'].getDescriptions()
+                            - for (var i = 0; i < variables.length; i++) {
                                 tr
                                     td
-                                        code= values[i].replace(/(\$[^\s]+).*/, '$1')
-                                    td= values[i].replace(/\$[^\s]+(.*)/, '$1')
+                                        code= variables[i]
+                                    td= descriptions[i]
+                            - }
 
                     if tags['return']
                         hr
