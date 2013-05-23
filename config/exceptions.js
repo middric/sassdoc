@@ -25,5 +25,6 @@ ExceptionFactory('DirectoryDoesNotExist', 'Directory does not exist');
 ExceptionFactory('UnableToReadFile', 'File cannot be read');
 ExceptionFactory('InvalidJSONFile', 'File is not valid JSON');
 ExceptionFactory('UnableToParseSass', 'Unable to parse Sass file');
+ExceptionFactory('InvalidTag', 'The specified tag is invalid');
 
 module.exports = exceptions;

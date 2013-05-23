@@ -109,17 +109,19 @@ var Tag = require('../models/Tag.js'),
 		parse: function () {
 			var line, i = 0, tagName, toParse;
 			for (; i < lines.length; i++) {
-				if (line = Tag.isValid(lines[i])) {
-					tagName = line.getName();
-					if (!tags[tagName]) {
-						tags[tagName] = [];
+				try {
+					if (line = Tag.getTag(lines[i])) {
+						tagName = line.getName();
+						if (!tags[tagName]) {
+							tags[tagName] = [];
+						}
+						tags[tagName].push(line);
+						if (line.isVariable()) {
+							this.isVariable = true;
+						}
+						continue;
 					}
-					tags[tagName].push(line);
-					if (line.isVariable()) {
-						this.isVariable = true;
-					}
-					continue;
-				}
+				} catch (e) {};
 
 				if (line = Tag.isMarkup(lines[i])) {
 					markup.push(line);

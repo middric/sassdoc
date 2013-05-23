@@ -1,41 +1,6 @@
-var Tag = function (k, v) {
-	var key = k.trim(),
-		value = v.trim(),
-		obj = {
-			getName: function () {
-				return key;
-			},
-
-			getValue: function () {
-				return value;
-			},
-
-			isVariable: function () {
-				return key === 'variable';
-			}
-		};
-
-	obj.toString = function () {
-		return key + ': ' + value;
-	};
-
-	return obj;
-};
-
-Tag.tags = [
-	'variable',
-	'component',
-	'package',
-	'name',
-	'description',
-	'usage',
-	'import',
-	'extends',
-	'markup',
-	'external',
-	'argument',
-	'return'
-];
+var AbstractTag = require('./Tags/AbstractTag'),
+	e = require('../config/exceptions'),
+	Tag = function () {};
 
 Tag.isValid = function (input) {
 	var matches = input.match(/^\s+\*\s+@([a-z]+)(.*)$/i);
@@ -43,11 +8,8 @@ Tag.isValid = function (input) {
 	if (!matches) {
 		return false;
 	}
-
-	if (Tag.tags.indexOf(matches[1]) < 0) {
-		return false;
-	}
-	return new Tag(matches[1], matches[2]);
+ 
+	return [matches[1].trim(), matches[2].trim()];
 };
 
 Tag.isMarkup = function (input) {
@@ -58,6 +20,19 @@ Tag.isMarkup = function (input) {
 	}
 
 	return matches[1];
-}
+};
+
+Tag.getTag = function (input) {
+	var tagModel;
+	try {
+		if (parts = Tag.isValid(input)) {
+			tagModel = require('./Tags/' + parts[0] + 'Tag');
+			obj = new tagModel(parts[0], parts[1]);
+			return new tagModel(parts[0], parts[1]);
+		}
+	} catch (e) {}
+
+	throw new e.InvalidTag();
+};
 
 module.exports = Tag;
