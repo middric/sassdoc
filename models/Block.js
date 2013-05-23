@@ -30,7 +30,7 @@ var Tag = require('../models/Tag.js'),
 
 		getName: function () {
 			if (this.getTag('name')) {
-				return this.getTag('name').getValue()
+				return this.getTag('name').getValue();
 			}
 
 			if (this.isVariable) {
@@ -62,7 +62,7 @@ var Tag = require('../models/Tag.js'),
 
 		getImports: function () {
 			var config = app.get('configuration'),
-				importTag = (this.getTag('import')) ? this.getTag('import').getValue() : [],
+				importTag = this.getTag('import'),
 				imports = [];
 
 			if (config.useCompass) {
@@ -73,8 +73,8 @@ var Tag = require('../models/Tag.js'),
 				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + config.imports[include] + "\";");
 			}
 
-			for (var i in importTag) {
-				imports.push("@import \"" + config.root + '/' + config.sassDirectory + '/' + importTag[i] + "\";");
+			if (importTag) {
+				imports.push(importTag.getImportStatements(config.root + '/' + config.sassDirectory));
 			}
 
 			return imports.join("\n");
