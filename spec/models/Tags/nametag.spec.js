@@ -28,4 +28,11 @@ describe('Name tag model', function () {
 
 		expect(tag.getID()).toBe(expected);
 	});
+
+	it("should return an ID without non word charactes", function () {
+		var tag = new NameTag('name', ' $%^&*() My very$%^&*() long name $%^&*() '),
+			expected = 'my_very_long_name';
+
+		expect(tag.getID()).toBe(expected);
+	});
 });

@@ -5,7 +5,13 @@ var NameTag = function (k, v) {
 	NameTag.super_.call(this, k, v, 'name');
 
 	this.getID = function () {
-		return this.getValue().trim().replace(/[^\w]/g, '_').toLowerCase();
+		return this.getValue()
+			.trim()
+			.toLowerCase()
+		// These could be nicer
+			.replace(/[^\w]/g, '_')
+			.replace(/^_+|_+$/g, '')
+			.replace(/_{2,}/, '_');
 	};
 };
 util.inherits(NameTag, AbstractTag);
