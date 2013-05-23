@@ -5,6 +5,7 @@ var util = require('util'),
 			reset = '\033[0m';
 		Error.captureStackTrace(this, constructor || this);
 		this.message = red + (message || 'Exception') + reset;
+		this.friendly = message || 'Exception';
 	},
 	ExceptionFactory = function (name, defaultMessage) {
 		var exception = function (message) {

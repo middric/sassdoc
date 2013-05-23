@@ -40,9 +40,15 @@ block append content
                     if block.getTagValue('description')
                         div(class="description")!= block.getTagValue('description')
 
-                    if block.getMarkup()
+                    - var css = block.getCSS();
+                    if css
                         hr
-                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")
+                        if typeof css === 'string'
+                            iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
+                        else
+                            div.alert.alert-block.alert-error 
+                                h4 Error parsing Sass (#{css.name}):
+                                p= css.friendly
                         hr
                         h2 HTML
                         pre.prettyprint.lang-html.linenums= block.getMarkup()
