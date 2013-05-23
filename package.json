@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app spec/fixtures/config.json",
-    "test": "jasmine-node spec"
+    "test": "jasmine-node --config debug '' spec"
   },
   "dependencies": {
     "express": "3.2.1",
