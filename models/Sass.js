@@ -6,14 +6,15 @@ var execSync = require('execSync'),
 	Sass = function () {};
 
 Sass.parse = function (input, app) {
-	var cmd = sassCommand + ' -s -t ' + sassStyle + ' --' + sassSyntax,
+	var cmd = sassCommand,
 		config = app.get('configuration'),
 		output;
 
 	if (config.useCompass) {
 		cmd += ' --compass';
 	}
-	output = execSync.exec("echo '" + input + "' | " + cmd);
+	cmd += ' -s -t ' + sassStyle + ' --' + sassSyntax;
+	output = execSync.exec("cd " + config.root + "; echo '" + input + "' | " + cmd + '; :');
 	if (output.code) {
 		throw new e.UnableToParseSass(output.stdout);
 	}
