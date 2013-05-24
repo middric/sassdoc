@@ -51,7 +51,7 @@ block append content
                 if block.getMarkup()
                     hr
                     if typeof css.stdout === 'string'
-                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
+                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div>")
                     else
                         div.alert.alert-block.alert-error 
                             h4 Error parsing Sass (#{css.name}):
@@ -96,16 +96,24 @@ block append content
                         hr
                         h2 Extends
                         pre.prettyprint.lang-html.linenums= tags['extend'].getValue()
+    script
+        window.onload=function(){iframeLoaded()};
 
 block append js
     script
         function iframeLoaded(el) {
-            var el = $(el),
+            var srcdoc;
+            if (!el) {
+                el = $('iframe');
+            }
+            el = $(el);
+            el.each(function () {
                 srcdoc = el.attr('srcdoc');
 
-            // No srcdoc support
-            if (!el.contents().find('#markup').length) {
-                el.contents().find('body').empty().html(srcdoc);
-            }
-            el.height($('#markup', el.contents()).outerHeight() + 40);
+                // No srcdoc support
+                if (!el.contents().find('#markup').length) {
+                    el.css('border', 0).contents().find('body').empty().html(srcdoc);
+                }
+                el.height($('#markup', el.contents()).outerHeight() + 40);
+            })
         }
