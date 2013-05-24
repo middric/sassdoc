@@ -30,10 +30,11 @@ block append content
                     else
                         a.only(href="/packages/#{currentPackage.url}") Back to package
 
-                if tags['todo']
+                if tags['review']
                      div.alert.alert-block.alert-info
-                            h4 Incomplete!
-                            p This feature is either incomplete or is missing documentation!
+                        h4 For review.
+                        p This feature has been flagged for review. 
+                            | It is either incomplete, missing documentation, or requires refactoring!
 
                 if block.isVariable
                     h2 Key
