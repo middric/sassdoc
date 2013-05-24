@@ -96,7 +96,9 @@ var Tag = require('../models/Tag.js'),
 				}
 			}
 			// Remove comments
-			css.stdout = css.stdout.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
+			if (css.stdout) {
+				css.stdout = css.stdout.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
+			}
 			return css;
 		},
 
