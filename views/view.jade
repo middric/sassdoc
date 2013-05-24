@@ -36,11 +36,11 @@ block append content
                     h2 Value
                     p= block.getSass().replace(/.*:([^;]*);?/, '$1')
                     if tags['description']
-                        div(class="description")!= description.getValue()
+                        div(class="description")!= tags['description'].getValue()
                 else
 
                 if tags['description']
-                    div(class="description")!= description.getValue()
+                    div(class="description")!= tags['description'].getValue()
 
                 if css
                     hr
