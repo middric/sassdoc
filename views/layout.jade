@@ -45,6 +45,10 @@ html
                             var affix = $('.sidebar');
                             var width = affix.parent('div').width();
                             affix.width(width);
+
+                            if ($(window).height() < affix.height()) {
+                                affix.removeClass('affix');
+                            }
                         }
 
                         function iframeHeight() {
