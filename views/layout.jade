@@ -47,9 +47,20 @@ html
                             affix.width(width);
                         }
 
+                        function iframeHeight() {
+                            $('iframe').each(function () {
+                                $(this).height($('#markup', $(this).contents()).outerHeight() + 40);
+                            });
+                        }
+
                         $(document).ready(function () {
                             affixWidth();
                             window.prettyPrint && prettyPrint()
                         });
 
-                        $(window).resize($.throttle(100, affixWidth));
+                        $(window).resize($.throttle(100,
+                            function () {
+                                affixWidth();
+                                iframeHeight();
+                            })
+                        );
