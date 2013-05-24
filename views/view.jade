@@ -44,12 +44,17 @@ block append content
 
                 if block.getMarkup()
                     hr
-                    if typeof css === 'string'
-                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
+                    if typeof css.stdout === 'string'
+                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
                     else
                         div.alert.alert-block.alert-error 
                             h4 Error parsing Sass (#{css.name}):
                             p= css.friendly
+                    if css.warnings
+                        div.alert.alert-block.alert-warning 
+                            h4 Warning!
+                            each warning in css.warnings
+                                p= warning
                     hr
                     h2 HTML
                     pre.prettyprint.lang-html.linenums= block.getMarkup()

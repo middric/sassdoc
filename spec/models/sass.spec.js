@@ -60,7 +60,7 @@ describe('Sass', function () {
 				"  background: red;\n" +
 				"}\n";
 
-		expect(sass).toBe(expected);
+		expect(sass.stdout).toBe(expected);
 	});
 
 	it("should fail to compile with compass if config set to false", function () {
@@ -81,6 +81,6 @@ describe('Sass', function () {
 
 		sass = Sass.parse('@import "compass"; body { background: red; }', app);
 
-		expect(sass).toBe(expected);
+		expect(sass.stdout).toBe(expected);
 	});
 });
