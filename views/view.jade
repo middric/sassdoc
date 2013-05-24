@@ -42,7 +42,7 @@ block append content
                 if tags['description']
                     div(class="description")!= tags['description'].getValue()
 
-                if css
+                if block.getMarkup()
                     hr
                     if typeof css === 'string'
                         iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
@@ -60,11 +60,12 @@ block append content
                         h2 Arguments
                         table
                             - arguments = tags['argument'].getArguments()
-                            each argument in arguments
+                            - for (var i = 0; i < arguments.length; i++) {
                                 tr
                                     td
-                                        code= argument.variable
-                                    td= argument.description
+                                        code= arguments[i].variable
+                                    td= arguments[i].description
+                            - }
 
                     if tags['return']
                         hr
