@@ -15,7 +15,6 @@ Sass.parse = function (input, app) {
 	}
 	cmd += ' -s -t ' + sassStyle + ' --' + sassSyntax;
 	output = execSync.exec("cd " + config.root + "; echo '" + input + "' | " + cmd + '; :');
-	execSync.exec("rm -rf public/temp/*; cp -R " + config.root + '/' + config.spriteDir + ' public/temp');
 	if (output.code) {
 		throw new e.UnableToParseSass(output.stdout);
 	}
@@ -23,6 +22,7 @@ Sass.parse = function (input, app) {
 		output.warnings = matches;
 	}
 	if (config.spriteDir) {
+		execSync.exec("rm -rf public/temp/*; cp -R " + config.root + '/' + config.spriteDir + ' public/temp');
 		output.stdout = output.stdout.replace(/url\('/g, "url('/temp/sprites/");
 	}
 
