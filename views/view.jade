@@ -30,6 +30,11 @@ block append content
                     else
                         a.only(href="/packages/#{currentPackage.url}") Back to package
 
+                if tags['todo']
+                     div.alert.alert-block.alert-info
+                            h4 Incomplete!
+                            p This feature is either incomplete or is missing documentation!
+
                 if block.isVariable
                     h2 Key
                     p= block.getSass().replace(/:.*/, '')
