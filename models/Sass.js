@@ -3,6 +3,7 @@ var execSync = require('execSync'),
 	sassCommand = 'sass',
 	sassSyntax = 'scss',
 	sassStyle = 'expanded',
+	wrench = require('wrench'),
 	Sass = function () {};
 
 Sass.parse = function (input, app) {
@@ -22,7 +23,12 @@ Sass.parse = function (input, app) {
 		output.warnings = matches;
 	}
 	if (config.spriteDir) {
-		execSync.exec("rm -rf public/temp/*; cp -R " + config.root + '/' + config.spriteDir + ' public/temp');
+		wrench.mkdirSyncRecursive('public/temp/', 0777);
+		wrench.copyDirSyncRecursive(
+			config.root + '/' + config.spriteDir,
+			'public/temp/sprites',
+			{ forceDelete: true }
+		);
 		output.stdout = output.stdout.replace(/url\('/g, "url('/temp/sprites/");
 	}
 
