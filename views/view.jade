@@ -96,6 +96,9 @@ block append content
                         hr
                         h2 Extends
                         pre.prettyprint.lang-html.linenums= tags['extend'].getValue()
+    div.alert.alert-block.alert-info
+        | This is a cached response 
+        a(href="?clear-cache=1") click to regenerate
     script
         window.onload=function(){iframeLoaded()};
 

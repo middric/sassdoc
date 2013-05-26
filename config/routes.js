@@ -41,10 +41,14 @@ module.exports = function (app) {
 
 	app.get('/', function (req, res) {
 		var html;
+		if (req.query['clear-cache']) {
+			cache.del('global');
+			res.redirect('/');
+			return;
+		}
 		if (html = cache.get('global')) {
 			res.send(html);
 		} else {
-			res.setHeader('Cache-Control', 'public, max-age=3000');
 			res.render('view', packageRoute('global'), function(err, html) {
 				cache.put('global', html, 300000);
 				res.send(html);
@@ -54,10 +58,14 @@ module.exports = function (app) {
 
 	app.get('/packages/:package', function (req, res) {
 		var html;
+		if (req.query['clear-cache']) {
+			cache.del(req.params.package);
+			res.redirect('/packages/' + req.params.package);
+			return;
+		}
 		if (html = cache.get(req.params.package)) {
 			res.send(html);
 		} else {
-			res.setHeader('Cache-Control', 'public, max-age=3000');
 			res.render('view', packageRoute(req.params.package), function(err, html) {
 				cache.put(req.params.package, html, 300000);
 				res.send(html);
