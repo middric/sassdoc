@@ -1,3 +1,5 @@
+var cache = require('memory-cache');
+
 module.exports = function (app) {
 	var packageRoute = function (requestedPackage, requestedBlock) {
 		var sassDirectory = app.get('configuration'),
@@ -38,11 +40,29 @@ module.exports = function (app) {
 	};
 
 	app.get('/', function (req, res) {
-		res.render('view', packageRoute('global'));
+		var html;
+		if (html = cache.get('global')) {
+			res.send(html);
+		} else {
+			res.setHeader('Cache-Control', 'public, max-age=3000');
+			res.render('view', packageRoute('global'), function(err, html) {
+				cache.put('global', html, 300000);
+				res.send(html);
+			});
+		}
 	});
 
 	app.get('/packages/:package', function (req, res) {
-		res.render('view', packageRoute(req.params.package));
+		var html;
+		if (html = cache.get(req.params.package)) {
+			res.send(html);
+		} else {
+			res.setHeader('Cache-Control', 'public, max-age=3000');
+			res.render('view', packageRoute(req.params.package), function(err, html) {
+				cache.put(req.params.package, html, 300000);
+				res.send(html);
+			});
+		}
 	});
 
 	app.get('/packages/:package/:block', function (req, res) {
