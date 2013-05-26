@@ -15,7 +15,8 @@ Sass.parse = function (input, app) {
 		cmd += ' --compass';
 	}
 	cmd += ' -s -t ' + sassStyle + ' --' + sassSyntax;
-	output = execSync.exec("cd " + config.root + "; echo '" + input + "' | " + cmd + '; :');
+	execSync.exec("cd " + config.root);
+	output = execSync.exec("echo '" + input + "' | " + cmd );
 	if (output.code) {
 		throw new e.UnableToParseSass(output.stdout);
 	}
