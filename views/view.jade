@@ -51,7 +51,7 @@ block append content
                 if block.getMarkup()
                     hr
                     if typeof css.stdout === 'string'
-                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div>")
+                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#markup:after{content: \".\";display: block;height: 0;clear: both;visibility: hidden;}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div>")
                     else
                         div.alert.alert-block.alert-error 
                             h4 Error parsing Sass (#{css.name}):
