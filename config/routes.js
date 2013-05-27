@@ -1,4 +1,5 @@
-var cache = require('memory-cache');
+var cache = require('memory-cache'),
+	_ = require('underscore');
 
 module.exports = function (app) {
 	var packageRoute = function (requestedPackage, requestedBlock) {
@@ -18,6 +19,11 @@ module.exports = function (app) {
 		for (i = blocks.length - 1; i >= 0; i--) {
 			blocks[i].parse();
 		}
+
+		blocks = _.filter(blocks, function (block) {
+			return !_.isEmpty(block.getTags());
+		});
+
 		blocks = Block.sort(blocks);
 		packages = Block.getPackages(blocks);
 		blocks = packages[requestedPackage].blocks;
@@ -43,8 +49,6 @@ module.exports = function (app) {
 		var html;
 		if (req.query['clear-cache']) {
 			cache.del('global');
-			res.redirect('/');
-			return;
 		}
 		if (html = cache.get('global')) {
 			res.send(html);
@@ -60,8 +64,6 @@ module.exports = function (app) {
 		var html;
 		if (req.query['clear-cache']) {
 			cache.del(req.params.package);
-			res.redirect('/packages/' + req.params.package);
-			return;
 		}
 		if (html = cache.get(req.params.package)) {
 			res.send(html);

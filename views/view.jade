@@ -120,3 +120,6 @@ block append js
                 el.height($('#markup', el.contents()).outerHeight() + 40);
             })
         }
+        if (window.history) {
+            window.history.replaceState({}, document.title, "?");
+        }

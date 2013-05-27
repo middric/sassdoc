@@ -210,6 +210,7 @@ Block.getBlocks = function (file, app) {
 			blocks[currentBlock].addLines(line);
 		}
 	}
+
 	return blocks;
 };
 
