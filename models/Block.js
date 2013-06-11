@@ -96,7 +96,9 @@ var Tag = require('../models/Tag.js'),
 				}
 			}
 			// Remove comments
-			css = css.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
+			if (css.stdout) {
+				css.stdout = css.stdout.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:\/\/(?:.*)$)/gm, '');
+			}
 			return css;
 		},
 
@@ -208,6 +210,7 @@ Block.getBlocks = function (file, app) {
 			blocks[currentBlock].addLines(line);
 		}
 	}
+
 	return blocks;
 };
 

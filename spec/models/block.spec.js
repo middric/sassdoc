@@ -102,7 +102,7 @@ describe('Block', function () {
 			sassDirectory: 'sass'
 		});
 
-		expect(blocks[1].getCSS()).toBe(
+		expect(blocks[1].getCSS().stdout).toBe(
 			".anothertest body {\n" +
 			"  background: red;\n" +
 			"}\n"

@@ -1,7 +1,7 @@
 !!!
 html
     head(lang='en')
-        title SassDoc
+        title Sassdoc
         block meta
             meta(name='viewport', content='width=device-width, initial-scale=1.0')
         block js
@@ -45,6 +45,16 @@ html
                             var affix = $('.sidebar');
                             var width = affix.parent('div').width();
                             affix.width(width);
+
+                            if ($(window).height() < affix.height()) {
+                                affix.removeClass('affix');
+                            }
+                        }
+
+                        function iframeHeight() {
+                            $('iframe').each(function () {
+                                $(this).height($('#markup', $(this).contents()).outerHeight() + 40);
+                            });
                         }
 
                         $(document).ready(function () {
@@ -52,4 +62,9 @@ html
                             window.prettyPrint && prettyPrint()
                         });
 
-                        $(window).resize($.throttle(100, affixWidth));
+                        $(window).resize($.throttle(100,
+                            function () {
+                                affixWidth();
+                                iframeHeight();
+                            })
+                        );

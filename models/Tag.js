@@ -25,7 +25,7 @@ Tag.isMarkup = function (input) {
 Tag.getTag = function (key, value) {
 	var tagModel;
 	try {
-		tagModel = require('./Tags/' + key + 'Tag');
+		tagModel = require('./Tags/' + key.charAt(0).toUpperCase() + key.slice(1) + 'Tag');
 		return new tagModel(key, value);
 	} catch (e) {
 		if (!!process.env.debug) {

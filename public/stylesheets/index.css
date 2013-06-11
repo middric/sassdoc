@@ -1,0 +1,247 @@
+/**
+ * @package Colors
+ * @variable
+ */
+/**
+ * @package Colors
+ * @variable
+ */
+/**
+ * @package Sidebar
+ * @name Sidebar mixin
+ * @usage .sidebar { @include sidebar; }
+ * @import stylesheets/_colors
+ * @import stylesheets/_block
+ *
+ * <div class="sidebar">
+ *     <ul>
+ *         <li><a>List item</a></li>
+ *     </ul>
+ * </div>
+ */
+/**
+ * @name Navigation
+ * @usage div { @include navigation }
+ * @import stylesheets/block
+ *
+ * <div>
+ *     <ul>
+ *         <li class="active">
+ *             <a href="">Link 1</a>
+ *         </li>
+ *         <li>
+ *             <a href="">Link 2</a>
+ *         </li>
+ *     </ul>
+ * </div>
+ */
+/**
+ * @package Typography
+ * @name Anchor styling
+ * 
+ * <a href="">A link</a>
+ */
+/* line 7, ../sass/stylesheets/_typography.scss */
+a {
+  color: #333;
+  padding: 0.5ex 1ex;
+  margin: -0.5ex -1ex;
+}
+/* line 11, ../sass/stylesheets/_typography.scss */
+a:hover {
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* line 18, ../sass/stylesheets/_typography.scss */
+.footer {
+  color: #999;
+}
+/* line 20, ../sass/stylesheets/_typography.scss */
+.footer a {
+  color: #999;
+  text-decoration: underline;
+}
+/* line 23, ../sass/stylesheets/_typography.scss */
+.footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/**
+ * @package Typography
+ * @name Heading 1
+ *
+ * <h1>Heading 1</h1>
+ */
+/* line 36, ../sass/stylesheets/_typography.scss */
+h1 {
+  font-size: 18px;
+}
+
+/**
+ * @package Typography
+ * @name Heading 2
+ *
+ * <h2>Heading 2</h2>
+ */
+/* line 46, ../sass/stylesheets/_typography.scss */
+h2 {
+  line-height: 1.2;
+  font-size: 16px;
+}
+
+/**
+ * @package Typography
+ * @name Description paragraph
+ *
+ * <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+ * Cras pellentesque, lacus a feugiat mollis, risus urna sollicitudin sem, at mollis justo turpis non metus. 
+ * Praesent at quam et sem lobortis pretium. Donec ac pulvinar justo. Morbi semper, velit posuere faucibus hendrerit, 
+ * mi ligula imperdiet enim, ac sodales magna dui non justo.</p>
+ */
+/* line 60, ../sass/stylesheets/_typography.scss */
+.description {
+  display: block;
+  margin-bottom: 2em;
+}
+
+/**
+ * @package Typography
+ * @name View detail link
+ *
+ * <a class="only" href="">View detail</a>
+ */
+/* line 71, ../sass/stylesheets/_typography.scss */
+.only {
+  float: right;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+  padding: 0;
+}
+/* line 78, ../sass/stylesheets/_typography.scss */
+.only:hover {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: #666;
+  text-decoration: underline;
+}
+
+/**
+ * @package Typography
+ * @name Code styling
+ * @description Negates some of the styling applied by Twitter Bootstrap
+ * <pre>Lorem ipsum dolor sit amet.</pre>
+ */
+/* line 93, ../sass/stylesheets/_typography.scss */
+pre {
+  border-radius: 0;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* line 7, ../sass/stylesheets/index.scss */
+body {
+  background: #fafafa;
+  padding: 20px;
+  font-size: 13px;
+}
+
+/* line 13, ../sass/stylesheets/index.scss */
+.header {
+  background: #fff;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  padding-bottom: 0;
+}
+/* line 4, ../sass/stylesheets/_block.scss */
+.header .span12 {
+  padding: 0px 20px;
+}
+/* line 20, ../sass/stylesheets/_navigation.scss */
+.header ul, .header li {
+  list-style: none;
+  margin: 0;
+}
+/* line 24, ../sass/stylesheets/_navigation.scss */
+.header li {
+  display: inline-block;
+}
+/* line 26, ../sass/stylesheets/_navigation.scss */
+.header li a {
+  display: block;
+  padding: 10px;
+  margin: 0;
+}
+/* line 31, ../sass/stylesheets/_navigation.scss */
+.header li.active a {
+  background: #333;
+  color: #fff;
+}
+
+/* line 16, ../sass/stylesheets/index.scss */
+.block {
+  background: #fff;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+/* line 4, ../sass/stylesheets/_block.scss */
+.block .span12 {
+  padding: 0px 20px;
+}
+
+/* line 19, ../sass/stylesheets/index.scss */
+.sidebar {
+  top: 40px;
+  margin-bottom: 40px;
+}
+@media (max-width: 767px) {
+  /* line 19, ../sass/stylesheets/index.scss */
+  .sidebar {
+    position: static !important;
+  }
+}
+/* line 20, ../sass/stylesheets/_sidebar.scss */
+.sidebar div {
+  background: #fff;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  padding: 0 20px 20px;
+  overflow: hidden;
+}
+/* line 24, ../sass/stylesheets/_sidebar.scss */
+.sidebar div ul, .sidebar div li {
+  list-style: none;
+  margin: 0;
+}
+/* line 28, ../sass/stylesheets/_sidebar.scss */
+.sidebar div a {
+  display: block;
+}
+
+/* line 22, ../sass/stylesheets/index.scss */
+iframe {
+  margin: 40px 0;
+}
+
+/* line 25, ../sass/stylesheets/index.scss */
+.footer {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/* line 29, ../sass/stylesheets/index.scss */
+code {
+  border-radius: 0;
+  display: block;
+  color: #1e347b;
+}
+
+/* line 34, ../sass/stylesheets/index.scss */
+td {
+  padding: 10px;
+}

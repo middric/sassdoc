@@ -1,3 +1,6 @@
+var cache = require('memory-cache'),
+	_ = require('underscore');
+
 module.exports = function (app) {
 	var packageRoute = function (requestedPackage, requestedBlock) {
 		var sassDirectory = app.get('configuration'),
@@ -16,6 +19,11 @@ module.exports = function (app) {
 		for (i = blocks.length - 1; i >= 0; i--) {
 			blocks[i].parse();
 		}
+
+		blocks = _.filter(blocks, function (block) {
+			return !_.isEmpty(block.getTags());
+		});
+
 		blocks = Block.sort(blocks);
 		packages = Block.getPackages(blocks);
 		blocks = packages[requestedPackage].blocks;
@@ -38,11 +46,33 @@ module.exports = function (app) {
 	};
 
 	app.get('/', function (req, res) {
-		res.render('view', packageRoute('global'));
+		var html;
+		if (req.query['clear-cache']) {
+			cache.del('global');
+		}
+		if (html = cache.get('global')) {
+			res.send(html);
+		} else {
+			res.render('view', packageRoute('global'), function(err, html) {
+				cache.put('global', html, 300000);
+				res.send(html);
+			});
+		}
 	});
 
 	app.get('/packages/:package', function (req, res) {
-		res.render('view', packageRoute(req.params.package));
+		var html;
+		if (req.query['clear-cache']) {
+			cache.del(req.params.package);
+		}
+		if (html = cache.get(req.params.package)) {
+			res.send(html);
+		} else {
+			res.render('view', packageRoute(req.params.package), function(err, html) {
+				cache.put(req.params.package, html, 300000);
+				res.send(html);
+			});
+		}
 	});
 
 	app.get('/packages/:package/:block', function (req, res) {

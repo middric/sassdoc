@@ -30,26 +30,37 @@ block append content
                     else
                         a.only(href="/packages/#{currentPackage.url}") Back to package
 
+                if tags['review']
+                     div.alert.alert-block.alert-info
+                        h4 For review.
+                        p This feature has been flagged for review. 
+                            | It is either incomplete, missing documentation, or requires refactoring!
+
                 if block.isVariable
                     h2 Key
                     p= block.getSass().replace(/:.*/, '')
                     h2 Value
                     p= block.getSass().replace(/.*:([^;]*);?/, '$1')
                     if tags['description']
-                        div(class="description")!= description.getValue()
+                        div(class="description")!= tags['description'].getValue()
                 else
 
                 if tags['description']
-                    div(class="description")!= description.getValue()
+                    div(class="description")!= tags['description'].getValue()
 
-                if css
+                if block.getMarkup()
                     hr
-                    if typeof css === 'string'
-                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#{block.getCSS()}</style><div id='markup'>#{block.getMarkup()}</div><script>window.onload=function(){parent.iframeLoaded(window.frameElement)};</script>")      
+                    if typeof css.stdout === 'string'
+                        iframe(width="100%", seamless, srcdoc="#{block.getExternal()}<style>*{margin:0;padding:0}#markup:after{content: \".\";display: block;height: 0;clear: both;visibility: hidden;}#{css.stdout}</style><div id='markup'>#{block.getMarkup()}</div>")
                     else
                         div.alert.alert-block.alert-error 
                             h4 Error parsing Sass (#{css.name}):
                             p= css.friendly
+                    if css.warnings
+                        div.alert.alert-block.alert-warning 
+                            h4 Warning!
+                            each warning in css.warnings
+                                p= warning
                     hr
                     h2 HTML
                     pre.prettyprint.lang-html.linenums= block.getMarkup()
@@ -60,11 +71,12 @@ block append content
                         h2 Arguments
                         table
                             - arguments = tags['argument'].getArguments()
-                            each argument in arguments
+                            - for (var i = 0; i < arguments.length; i++) {
                                 tr
                                     td
-                                        code= argument.variable
-                                    td= argument.description
+                                        code= arguments[i].variable
+                                    td= arguments[i].description
+                            - }
 
                     if tags['return']
                         hr
@@ -78,22 +90,36 @@ block append content
                     if tags['import']
                         hr
                         h2 Imports
-                        pre.prettyprint.lang-css.linenums= tags['import'].getValue()
+                        pre.prettyprint.lang-css.linenums= tags['import'].getValue().join("\n")
 
                     if tags['extend']
                         hr
                         h2 Extends
                         pre.prettyprint.lang-html.linenums= tags['extend'].getValue()
+    div.alert.alert-block.alert-info
+        | This is a cached response 
+        a(href="?clear-cache=1") click to regenerate
+    script
+        window.onload=function(){iframeLoaded()};
 
 block append js
     script
         function iframeLoaded(el) {
-            var el = $(el),
+            var srcdoc;
+            if (!el) {
+                el = $('iframe');
+            }
+            el = $(el);
+            el.each(function () {
                 srcdoc = el.attr('srcdoc');
 
-            // No srcdoc support
-            if (!el.contents().find('#markup').length) {
-                el.contents().find('body').empty().html(srcdoc);
-            }
-            el.height($('#markup', el.contents()).outerHeight() + 40);
+                // No srcdoc support
+                if (!el.contents().find('#markup').length) {
+                    el.css('border', 0).contents().find('body').empty().html(srcdoc);
+                }
+                el.height($('#markup', el.contents()).outerHeight() + 40);
+            })
+        }
+        if (window.history) {
+            window.history.replaceState({}, document.title, "?");
         }
