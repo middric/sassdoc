@@ -181,7 +181,7 @@ Block.getPackages = function (blocks) {
 };
 
 Block.getBlocks = function (file, app) {
-	var lines = file.output.split("\n"), line = '',
+	var lines = file.output.split(/\r?\n/), line = '',
 		blocks = [],
 		currentBlock = null,
 		openCount = 0, closeCount = 0;
